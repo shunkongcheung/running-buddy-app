@@ -1,5 +1,6 @@
 import React, { memo, ReactNode } from "react";
 
+import { useUserContext } from "../../contexts";
 import NavBar from "./NavBar";
 
 interface LayoutProps {
@@ -7,9 +8,10 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { displayName } = useUserContext();
   return (
     <main>
-      <NavBar />
+      <NavBar displayName={displayName} />
       {children}
     </main>
   );

@@ -1,19 +1,21 @@
 import React, { memo } from "react";
 import Link from "next/link";
 import {
-  Button,
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
+  NavbarText,
   Nav,
   NavItem,
   NavLink,
 } from "reactstrap";
 
-interface NavBarProps {}
+interface NavBarProps {
+  displayName?: string;
+}
 
-const NavBar: React.FC<NavBarProps> = () => {
+const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
@@ -45,6 +47,7 @@ const NavBar: React.FC<NavBarProps> = () => {
               </Link>
             </NavItem>
           </Nav>
+          {!!displayName && <NavbarText>{displayName}</NavbarText>}
         </Collapse>
       </Navbar>
     </>
