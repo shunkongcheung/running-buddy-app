@@ -1,8 +1,4 @@
+import Home from '../containers/Home'
 
-export default function Home() {
-  return (
-    <>
-				Hello world
-			</>
-  )
-}
+export default ()  => <Home />
+    
