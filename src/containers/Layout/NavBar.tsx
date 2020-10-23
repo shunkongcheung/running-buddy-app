@@ -11,12 +11,9 @@ import {
   NavLink,
 } from "reactstrap";
 
-interface NavBarProps {
-  isLoggedIn: boolean;
-  handleLogout: () => any;
-}
+interface NavBarProps {}
 
-const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, handleLogout }) => {
+const NavBar: React.FC<NavBarProps> = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
@@ -28,23 +25,26 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, handleLogout }) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
+              <Link href="/home">
+                <NavLink>Home</NavLink>
+              </Link>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
-                GitHub
-              </NavLink>
+              <Link href="/trip">
+                <NavLink>Trip</NavLink>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link href="/buddy">
+                <NavLink>Buddy</NavLink>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link href="/profile">
+                <NavLink>Profile</NavLink>
+              </Link>
             </NavItem>
           </Nav>
-          {isLoggedIn ? (
-            <Button color="secondary" onClick={handleLogout}>
-              LOGOUT
-            </Button>
-          ) : (
-            <Link href="/login">
-              <a>LOGIN</a>
-            </Link>
-          )}
         </Collapse>
       </Navbar>
     </>
