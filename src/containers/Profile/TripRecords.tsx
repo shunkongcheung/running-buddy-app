@@ -51,7 +51,7 @@ const TripRecords: React.FC = () => {
         <ListGroupItem key={`TripRecordItem-${trip.uid}`}>
           <Media>
             <Media body>
-              <Media header>
+              <Media header="true">
                 <h4>{trip.name}</h4>
               </Media>
               <p>

@@ -8,9 +8,14 @@ import UserInfoCard from "./UserInfoCard";
 
 import classNames from "./Profile.module.css";
 
+import { useFirebaseAuthReady } from "../../hooks";
+
 interface ProfileProps {}
 
 const Profile: React.FC<ProfileProps> = () => {
+  const ready = useFirebaseAuthReady();
+  if (!ready) return <></>;
+
   return (
     <Container>
       <Row>
