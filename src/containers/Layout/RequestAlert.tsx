@@ -20,7 +20,7 @@ const RequestAlert: React.FC = () => {
   });
 
   const handleClick = React.useCallback(() => {
-    router.push("/trip?tap=request");
+    router.push("/trip?tab=requested");
     setTrip({ name: "", isExist: false, createdByName: "" });
   }, [router]);
 

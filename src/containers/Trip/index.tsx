@@ -18,8 +18,11 @@ type TabName = "upcoming" | "requested" | "finished";
 
 const Trip: React.FC<TripProps> = () => {
   const router = useRouter();
+  const { query } = router;
   const [isOpen, setIsOpen] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState<TabName>("upcoming");
+  const [activeTab, setActiveTab] = React.useState<TabName>(
+    query?.tab || "upcoming"
+  );
   const upcoming = useTripListState(false);
 
   const handleClose = useCallback(
