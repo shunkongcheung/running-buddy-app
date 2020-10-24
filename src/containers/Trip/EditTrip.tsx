@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import firebase from "firebase";
 import {
-  Alert,
   Button,
   Form,
   FormGroup,
@@ -13,95 +12,72 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-interface TripProfile {
-  uid: string;
-  displayName: string;
-  email: string;
-}
-
-interface Trip {
-  ownerUid: string;
-  meetings: Array<any>;
-  buddyProfile: TripProfile;
-}
+import { Trip, Request } from "../../types";
+import ParticipantsField from "./ParticipantsField";
 
 interface EditTripModalProps {
   handleClose: (refresh?: boolean) => any;
   isOpen: boolean;
 }
 
-const getTripProfile = async (email: string) => {
-  // find by email
-  const db = firebase.firestore();
-  const docRef = await db
-    .collection("registered-users")
-    .where("email", "==", email)
-    .get();
-
-  if (docRef.size !== 1) throw Error("Data not found");
-
-  let buddyProfile: TripProfile = {
-    uid: "",
-    displayName: "",
-    email: "",
-  };
-
-  // only one item
-  docRef.forEach((item) => {
-    const id = item.id;
-    const data = item.data();
-
-    // cant add self
-    buddyProfile.displayName = data.displayName;
-    buddyProfile.uid = id;
-    buddyProfile.email = data.email;
-  });
-  return buddyProfile;
-};
-
-const validateTripExist = async (ownerUid: string, buddyUid: string) => {
-  const db = firebase.firestore();
-  const docRef = await db
-    .collection("buddies")
-    .where("ownerUid", "==", ownerUid)
-    .where("buddyProfile.uid", "==", buddyUid)
-    .get();
-
-  if (!docRef.empty) throw Error("Trip already exists!");
-};
-
-const storeTrip = async (buddy: Trip) => {
-  const db = firebase.firestore();
-  await db.collection("buddies").doc().set(buddy);
-};
-
 const EditTripModal: React.FC<EditTripModalProps> = ({
   handleClose,
   isOpen,
 }) => {
-  const [isErr, setErr] = React.useState(false);
-  const [email, setEmail] = React.useState("");
+  const [trip, setTrip] = React.useState<Trip>({
+    name: "",
+    startAt: new Date(),
+    isFinished: false,
+    participants: [],
+    createdByUid: firebase.auth().currentUser?.uid || "",
+    createdAt: new Date(),
+  });
 
-  const handleSearch = React.useCallback(
+  const handleSubmit = React.useCallback(
     async (e) => {
       if (e) e.preventDefault();
+      const db = firebase.firestore();
 
-      const { uid } = firebase.auth().currentUser;
       try {
-        const buddyProfile = await getTripProfile(email);
-        if (buddyProfile.uid === uid)
-          throw Error("Cannot register yourself as buddy :(");
+        const tripRef = await db
+          .collection("trips")
+          .add({ ...trip, participants: [] });
+        const tripUid = tripRef.id;
 
-        await validateTripExist(uid, buddyProfile.uid);
+        await Promise.all([
+          ...trip.participants.map(async (invitedUserUid: string) => {
+            const request: Request = {
+              status: "pending",
+              tripUid,
+              invitedUserUid,
+              createdByUid: trip.createdByUid,
+            };
+            return db.collection("requests").add(request);
+          }),
+        ]);
 
-        await storeTrip({ ownerUid: uid, meetings: [], buddyProfile });
         handleClose(true);
       } catch (err) {
         console.error(err);
-        setErr(true);
       }
     },
-    [email]
+    [trip]
+  );
+
+  const handleChange = React.useCallback(
+    ({ target: { value, name, checked } }) => {
+      if (name === "participants") {
+        setTrip((o) => {
+          let { participants } = o;
+          if (checked) participants.push(value);
+          else participants = participants.filter((itm) => itm !== value);
+          return { ...o, participants };
+        });
+      } else if (name === "startAt") {
+        setTrip((o) => ({ ...o, [name]: new Date(value) }));
+      } else setTrip((o) => ({ ...o, [name]: value }));
+    },
+    []
   );
 
   return (
@@ -110,26 +86,35 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
         You are ready to go... soon!
       </ModalHeader>
       <ModalBody>
-        {isErr && <Alert color="danger">Invalid Email input</Alert>}
-        <Form onSubmit={handleSearch}>
+        <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Label for="email">Email</Label>
+            <Label for="name">Name</Label>
             <Input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Search a user"
-              onChange={({ target: { value } }) => {
-                setEmail(value);
-                setErr(false);
-              }}
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Name a trip"
+              value={trip.name}
+              onChange={handleChange}
+            />
+          </FormGroup>
+          <ParticipantsField handleChange={handleChange} />
+          <FormGroup>
+            <Label for="startAt">Start At</Label>
+            <Input
+              type="datetime-local"
+              name="startAt"
+              id="startAt"
+              placeholder="Name a trip"
+              defaultValue={trip.startAt.toISOString()}
+              onChange={handleChange}
             />
           </FormGroup>
         </Form>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={handleSearch}>
-          Edit
+        <Button color="primary" onClick={handleSubmit}>
+          Submit
         </Button>
         <Button color="secondary" onClick={() => handleClose()}>
           Cancel
