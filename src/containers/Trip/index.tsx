@@ -83,6 +83,13 @@ const Trip: React.FC<TripProps> = () => {
             trips={finished.trips}
           />
         </TabPane>
+        <TabPane tabId="finished">
+          <TripList
+            isFinished={false}
+            loading={finished.loading}
+            trips={finished.trips}
+          />
+        </TabPane>
       </TabContent>
     </Container>
   );
