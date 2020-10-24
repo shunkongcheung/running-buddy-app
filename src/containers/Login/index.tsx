@@ -14,6 +14,8 @@ import firebase from "firebase";
 import { useUserContext } from "../../contexts";
 import classNames from "./Login.module.css";
 
+import { RegisteredUser } from "../../types";
+
 interface LoginProps {}
 
 const getLocation = (): Promise<{
@@ -49,10 +51,15 @@ const Login: React.FC<LoginProps> = () => {
     setIsLoading(true);
 
     // store user email to database
+    const user: RegisteredUser = {
+      email,
+      displayName,
+      latitude,
+      longitude,
+      lastLoggedInAt: new Date(),
+    };
     const db = firebase.firestore();
-    db.collection("registered-users")
-      .doc(uid)
-      .set({ email, displayName, latitude, longitude });
+    db.collection("registered-users").doc(uid).set(user);
 
     // redirect and store token
     const { goTo } = router.query;
