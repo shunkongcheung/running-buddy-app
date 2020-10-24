@@ -3,9 +3,8 @@ import firebase from "firebase";
 import { Container, ListGroup, ListGroupItem, Media } from "reactstrap";
 
 import { RegisteredUser } from "../../types";
-import { LineButton } from "../../components";
+import { LineButton, PlaceHolder } from "../../components";
 import { getDistanceBetweenCoords, getUserCoord } from "../../utils";
-import classNames from "./BuddyList.module.css";
 
 interface BuddyUser extends RegisteredUser {
   buddyId: string;
@@ -97,7 +96,7 @@ const BuddyList: React.FC<BuddyListProps> = ({ buddies, updateBuddies }) => {
             </ListGroupItem>
           )
         )}
-        {!buddies.length && <div className={classNames.msg}>Add a buddy!</div>}
+        {!buddies.length && <PlaceHolder>Add a buddy!</PlaceHolder>}
       </ListGroup>
     </Container>
   );
