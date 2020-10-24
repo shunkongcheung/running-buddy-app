@@ -29,8 +29,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
 }) => {
   const [trip, setTrip] = React.useState<Trip>({
     name: "",
-    startAt: new Date(),
-    status: "created",
+    rounds: [],
     participants: [],
     createdByUid: firebase.auth().currentUser?.uid || "",
     createdAt: new Date(),
@@ -108,8 +107,6 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
           else participants = participants.filter((itm) => itm !== value);
           return { ...o, participants };
         });
-      } else if (name === "startAt") {
-        setTrip((o) => ({ ...o, [name]: new Date(value) }));
       } else if (name === "startingpoint") {
         setTrip((o) => ({ ...o, startingPoint: value }));
       } else if (name === "endingpoint") {
@@ -216,19 +213,6 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
             </>
           ))}
           <ParticipantsField handleChange={handleChange} />
-          <FormGroup>
-            <Label for="startAt" className={classNames.formLabel}>
-              Start At
-            </Label>
-            <Input
-              type="datetime-local"
-              name="startAt"
-              id="startAt"
-              placeholder="Name a trip"
-              defaultValue={trip.startAt.toISOString()}
-              onChange={handleChange}
-            />
-          </FormGroup>
         </Form>
       </ModalBody>
       <ModalFooter>
