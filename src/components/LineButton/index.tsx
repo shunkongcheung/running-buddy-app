@@ -14,7 +14,7 @@ const LinedButton: React.FC<LinedButtonProps> = ({
   return (
     <Button
       {...rest}
-      className={classNames.container}
+      className={`${rest.className || ""} ${classNames.container}`}
       style={{ border: `2px solid ${lineColor}`, color: lineColor }}
     />
   );
