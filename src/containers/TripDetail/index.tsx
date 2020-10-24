@@ -97,7 +97,6 @@ const TripDetail: React.FC<TripDetailProps> = () => {
       </Container>
     );
 
-  console.log("stopPoints",stopPoints);
 
   return (
     <Container>
