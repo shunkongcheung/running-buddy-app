@@ -1,4 +1,6 @@
 import React, { memo, useCallback } from "react";
+import firebase from "firebase";
+import { useRouter } from "next/router";
 import { Container, Nav, TabContent, TabPane } from "reactstrap";
 
 import EditTrip from "./EditTrip";
@@ -15,6 +17,7 @@ interface TripProps {}
 type TabName = "upcoming" | "requested" | "finished";
 
 const Trip: React.FC<TripProps> = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState<TabName>("upcoming");
   const upcoming = useTripListState(false);
@@ -28,6 +31,13 @@ const Trip: React.FC<TripProps> = () => {
     },
     [upcoming.updateTrips]
   );
+
+  React.useEffect(() => {
+    if (!firebase.auth().currentUser) {
+      router.push("/login?goTo=/buddy");
+      return;
+    }
+  }, []);
 
   return (
     <Container>
