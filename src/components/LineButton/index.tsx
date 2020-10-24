@@ -4,10 +4,13 @@ import { Button, ButtonProps } from "reactstrap";
 import classNames from "./LineButton.module.css";
 
 interface LinedButtonProps extends ButtonProps {
-  lineColor: string;
+  lineColor?: string;
 }
 
-const LinedButton: React.FC<LinedButtonProps> = ({ lineColor, ...rest }) => {
+const LinedButton: React.FC<LinedButtonProps> = ({
+  lineColor = "dodgerblue",
+  ...rest
+}) => {
   return (
     <Button
       {...rest}
