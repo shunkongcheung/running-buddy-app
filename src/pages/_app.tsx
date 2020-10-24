@@ -28,9 +28,25 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Head>
           <title>Create Next App</title>
           <link rel="icon" href="/favicon.ico" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+            rel="stylesheet"
+          />
         </Head>
 
         <Layout>
+          <style jsx global>{`
+            html,
+            body {
+              padding: 0;
+              margin: 0;
+              font-family: Roboto;
+            }
+
+            * {
+              box-sizing: border-box;
+            }
+          `}</style>
           <Component {...pageProps} />
         </Layout>
       </UserContext.Provider>
