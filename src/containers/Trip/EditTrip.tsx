@@ -1,19 +1,11 @@
-import React, { memo } from "react";
+import React, {memo} from "react";
 import firebase from "firebase";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "reactstrap";
+import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader,} from "reactstrap";
 
-import { Trip, InviteRequest } from "../../types";
+import {InviteRequest, Trip} from "../../types";
 import ParticipantsField from "./ParticipantsField";
+
+import classNames from "./EditTrip.module.css";
 
 interface EditTripModalProps {
   handleClose: (refresh?: boolean) => any;
@@ -21,9 +13,9 @@ interface EditTripModalProps {
 }
 
 const EditTripModal: React.FC<EditTripModalProps> = ({
-  handleClose,
-  isOpen,
-}) => {
+                                                       handleClose,
+                                                       isOpen,
+                                                     }) => {
   const [trip, setTrip] = React.useState<Trip>({
     name: "",
     startAt: new Date(),
@@ -88,26 +80,26 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
       <ModalBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Label for="name">Name</Label>
+            <Label for="name" className={classNames.formLabel}>Name</Label>
             <Input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Name a trip"
-              value={trip.name}
-              onChange={handleChange}
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Name a trip"
+                value={trip.name}
+                onChange={handleChange}
             />
           </FormGroup>
           <ParticipantsField handleChange={handleChange} />
           <FormGroup>
-            <Label for="startAt">Start At</Label>
+            <Label for="startAt" className={classNames.formLabel}>Start At</Label>
             <Input
-              type="datetime-local"
-              name="startAt"
-              id="startAt"
-              placeholder="Name a trip"
-              defaultValue={trip.startAt.toISOString()}
-              onChange={handleChange}
+                type="datetime-local"
+                name="startAt"
+                id="startAt"
+                placeholder="Name a trip"
+                defaultValue={trip.startAt.toISOString()}
+                onChange={handleChange}
             />
           </FormGroup>
         </Form>
