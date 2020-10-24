@@ -18,7 +18,7 @@ interface BuddyListState {
 }
 
 const getBuddies = async (): Promise<Array<BuddyItem>> => {
-  const { uid } = firebase.auth().currentUser;
+  const { uid } = firebase.auth().currentUser || {};
 
   // get data from firestore buddies
   const db = firebase.firestore();
