@@ -20,8 +20,8 @@ const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <Container>
-      <Navbar color="light" light expand="md">
+    <Navbar color="light" light expand="md">
+      <Container>
         <Link href="/">
           <NavbarBrand href="/">RUNNING BUDDY</NavbarBrand>
         </Link>
@@ -45,8 +45,8 @@ const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
             </Link>
           )}
         </Collapse>
-      </Navbar>
-    </Container>
+      </Container>
+    </Navbar>
   );
 };
 
