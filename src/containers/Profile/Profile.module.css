@@ -1,31 +1,17 @@
-.card {
-    max-width: 350px;
-    margin-top: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    /*background-color: #f7f7f7;*/
-    -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+.col {
+  margin: 15px 0;
+  max-height: 70vh;
+  overflow: auto;
 }
 
-.logoutBtn {
-    width: 100%;
-    margin-top: 20px;
+.reverseRow {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
-.avatar {
-    width: 150px;
-    height: 150px;
-    margin: 10px auto 10px;
-    display: block;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-}
-
-.formLabel {
-    color: #474747;
-    font-size: 14px;
-    margin-bottom: .1rem;
+@media (min-width: 768px) {
+  .reverseRow {
+    display: flex;
+    flex-direction: row;
+  }
 }
