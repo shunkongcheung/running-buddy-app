@@ -1,14 +1,12 @@
-import React, { memo } from "react";
+import React, {memo} from "react";
 import Link from "next/link";
 
-import { ListGroup, ListGroupItem, Media } from "reactstrap";
-
-import { FaRunning } from "react-icons/fa";
+import {ListGroup, ListGroupItem, Media} from "reactstrap";
 
 import classNames from "./TripList.module.css";
 
-import { PlaceHolder, Progress } from "../../components";
-import { Trip } from "../../types";
+import {PlaceHolder, Progress} from "../../components";
+import {Trip} from "../../types";
 
 interface TripItem extends Trip {
   uid: string;
@@ -30,17 +28,19 @@ const TripList: React.FC<TripListProps> = ({ loading, trips }) => {
           <Link href={`/trip/${uid}`} key={`TripListItem-${uid}`}>
             <ListGroupItem>
               <Media>
-                <Media left>
-                  <FaRunning className={classNames.runningIcon} />
+                <Media className={classNames.mediaLeft} left>
+                  {/*<FaRunning className={classNames.runningIcon} />*/}
+                  <Media className={classNames.avatar} object src="/trip.png"/>
                 </Media>
                 <Media body>
-                  <h3>{name}</h3>
-                  <p>
+                  <h5>{name}</h5>
+                  <h6 className={classNames.emailH6}>
                     Your trip is scheduled at {startAt.toLocaleString()}
-                    <br />
+                    <br/>
                     There are {participants.length} confirmed your request.
-                  </p>
-                  <small>Created at {createdAt.toLocaleString()}</small>
+                  </h6>
+                  <h6 className={classNames.emailH6}>Created at {createdAt.toLocaleString()}</h6>
+                  <h6 className={classNames.emailH6}>Number of trip rounds: </h6>
                 </Media>
               </Media>
             </ListGroupItem>

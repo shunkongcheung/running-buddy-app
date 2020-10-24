@@ -64,19 +64,19 @@ const BuddyList: React.FC<BuddyListProps> = ({buddies, updateBuddies}) => {
                   <ListGroupItem key={`Buddy-${displayName}-${idx}-${buddyId}`}>
                     <Media>
                       <Media left className={classNames.mediaLeft}>
-                        <Media className={classNames.avatar} object src={photoURL} width={60}/>
+                        <Media className={classNames.avatar} object src={photoURL}/>
                       </Media>
                       <Media body>
                         <h5>{displayName}</h5>
                         <h6 className={classNames.emailH6}>{email}</h6>
                         <Media>
-                          <small>
+                          <small className={classNames.loggedInLabel}>
                             Last Logged in at: {lastLoggedInAt.toLocaleString()}
                           </small>
                         </Media>
                         {userCoord.latitude !== null && userCoord.longitude !== null && (
                             <div>
-                              <small>
+                              <small className={classNames.distanceLabel}>
                                 About{" "}
                                 {getDistanceBetweenCoords(
                                     {longitude, latitude},
