@@ -1,0 +1,18 @@
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #444;
+}
+.msg {
+  margin-top: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  color: #777;
+}
+.unlinkBtnContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
