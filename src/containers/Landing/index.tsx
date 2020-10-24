@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import Link from "next/link";
-import { Button, Container, Col, Row } from "reactstrap";
+import { Button, Container, Col, Fade, Row } from "reactstrap";
 
 import {
   BsFillShieldLockFill,
@@ -15,7 +15,9 @@ const Landing: React.FC = () => {
   return (
     <>
       <div className={classNames.headingContainer}>
-        <div className={classNames.heading}>RUNNING FOR YOUR COMMUNITY</div>
+        <Fade mountOnEnter>
+          <div className={classNames.heading}>RUNNING FOR YOUR COMMUNITY</div>
+        </Fade>
       </div>
       <Row>
         <Col xs={12} md={6}>
