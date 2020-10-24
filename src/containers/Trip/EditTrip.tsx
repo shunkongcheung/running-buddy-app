@@ -13,8 +13,10 @@ import {
   ModalFooter
 } from "reactstrap";
 
-import { Trip, InviteRequest } from "../../types";
+import {InviteRequest, Trip} from "../../types";
 import ParticipantsField from "./ParticipantsField";
+
+import classNames from "./EditTrip.module.css";
 
 interface EditTripModalProps {
   handleClose: (refresh?: boolean) => any;
@@ -156,14 +158,14 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
       <ModalBody>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Label for="name">Name</Label>
+            <Label for="name" className={classNames.formLabel}>Name</Label>
             <Input
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Name a trip"
-              value={trip.name}
-              onChange={handleChange}
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Name a trip"
+                value={trip.name}
+                onChange={handleChange}
             />
           </FormGroup>
           <FormGroup>
@@ -218,14 +220,14 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
           ))}
           <ParticipantsField handleChange={handleChange} />
           <FormGroup>
-            <Label for="startAt">Start At</Label>
+            <Label for="startAt" className={classNames.formLabel}>Start At</Label>
             <Input
-              type="datetime-local"
-              name="startAt"
-              id="startAt"
-              placeholder="Name a trip"
-              defaultValue={trip.startAt.toISOString()}
-              onChange={handleChange}
+                type="datetime-local"
+                name="startAt"
+                id="startAt"
+                placeholder="Name a trip"
+                defaultValue={trip.startAt.toISOString()}
+                onChange={handleChange}
             />
           </FormGroup>
         </Form>

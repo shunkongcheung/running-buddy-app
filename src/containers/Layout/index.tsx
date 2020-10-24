@@ -13,6 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [displayName, setDisplayName] = React.useState("");
 
   React.useEffect(() => {
+    // listen to login / logout and update display name accordingly
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       setDisplayName(user?.displayName || "");
     });
@@ -21,6 +22,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       unsubscribe();
     };
   }, [pathname]);
+
+  React.useEffect(() => {
+    // every minutes, update last logged in time
+    const interval = setInterval(() => {
+      const uid = firebase.auth().currentUser?.uid;
+      if (uid)
+        firebase
+          .firestore()
+          .collection("registered-users")
+          .doc(uid)
+          .update({ lastLoggedInAt: new Date() });
+    }, 1000 * 60);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <main>

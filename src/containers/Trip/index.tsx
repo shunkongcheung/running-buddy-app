@@ -61,12 +61,6 @@ const Trip: React.FC<TripProps> = () => {
           label="Requested"
           handleClick={setActiveTab}
         />
-        <TabNavItem
-          activeName={activeTab}
-          tabName="finished"
-          label="Finished"
-          handleClick={setActiveTab}
-        />
       </Nav>
       <TabContent activeTab={activeTab}>
         <TabPane tabId="upcoming">
@@ -79,13 +73,6 @@ const Trip: React.FC<TripProps> = () => {
         <TabPane tabId="requested">
           <RequestList handleRequestUpdate={upcoming.updateTrips} />
         </TabPane>
-        {/* <TabPane tabId="finished"> */}
-        {/*   <TripList */}
-        {/*     isFinished={false} */}
-        {/*     loading={finished.loading} */}
-        {/*     trips={finished.trips} */}
-        {/*   /> */}
-        {/* </TabPane> */}
       </TabContent>
     </Container>
   );

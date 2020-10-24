@@ -1,4 +1,9 @@
-
 import TripDetail from "../../containers/TripDetail";
+import { useFirebaseAuthReady } from "../../hooks";
 
-export default () => <TripDetail />;
+export default () => {
+  const ready = useFirebaseAuthReady();
+  if (!ready) return <></>;
+
+  return <TripDetail />;
+};
