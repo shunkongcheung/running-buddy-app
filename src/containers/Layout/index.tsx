@@ -2,6 +2,7 @@ import React, { memo, ReactNode } from "react";
 import { useRouter } from "next/router";
 import firebase from "firebase";
 
+import RequestAlert from "./RequestAlert";
 import NavBar from "./NavBar";
 
 interface LayoutProps {
@@ -43,6 +44,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <main>
       <NavBar displayName={displayName} />
+      <RequestAlert />
       {children}
     </main>
   );
