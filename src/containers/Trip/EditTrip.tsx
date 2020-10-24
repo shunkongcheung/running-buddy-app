@@ -12,7 +12,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-import { Trip, Request } from "../../types";
+import { Trip, InviteRequest } from "../../types";
 import ParticipantsField from "./ParticipantsField";
 
 interface EditTripModalProps {
@@ -27,7 +27,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
   const [trip, setTrip] = React.useState<Trip>({
     name: "",
     startAt: new Date(),
-    isFinished: false,
+    status: "created",
     participants: [],
     createdByUid: firebase.auth().currentUser?.uid || "",
     createdAt: new Date(),
@@ -46,7 +46,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
 
         await Promise.all([
           ...trip.participants.map(async (invitedUserUid: string) => {
-            const request: Request = {
+            const request: InviteRequest = {
               status: "pending",
               tripUid,
               invitedUserUid,

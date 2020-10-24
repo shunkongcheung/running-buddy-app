@@ -13,12 +13,12 @@ interface TripListState {
 }
 
 const getSelfCreatedTrips = async (isFinished: boolean) => {
-  const { uid } = firebase.auth().currentUser;
+  const { uid } = firebase.auth().currentUser || {};
   const db = firebase.firestore();
 
   const docRef = await db
     .collection("trips")
-    .where("isFinished", "==", isFinished)
+    .where("status", isFinished ? "==" : "!=", "finished")
     .where("createdBy", "==", uid)
     .orderBy("createdAt", "desc")
     .get();
@@ -45,7 +45,7 @@ const getJoinedTrips = async (isFinished: boolean) => {
 
   const docRef = await db
     .collection("trips")
-    .where("isFinished", "==", isFinished)
+    .where("status", isFinished ? "==" : "!=", "finished")
     .where("participants", "array-contains", uid)
     .orderBy("createdAt", "desc")
     .get();
