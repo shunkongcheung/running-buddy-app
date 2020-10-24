@@ -26,7 +26,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     <FirebaseAuthProvider firebase={firebase} {...config}>
       <UserContext.Provider value={userContext}>
         <Head>
-          <title>Create Next App</title>
+          <title>Running buddy app</title>
+          <meta
+            name="description"
+            content="Schedule meetups with friends for running"
+          />
+          <meta name="keywords" content="running,exercise,meetup,community" />
+          <meta name="author" content="quantum mobs" />
           <link rel="icon" href="/favicon.ico" />
           <link
             href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
