@@ -19,8 +19,7 @@ const getSelfCreatedTrips = async (isFinished: boolean) => {
   const docRef = await db
     .collection("trips")
     .where("status", isFinished ? "==" : "!=", "finished")
-    .where("createdBy", "==", uid)
-    .orderBy("createdAt", "desc")
+    .where("createdByUid", "==", uid)
     .get();
 
   if (docRef.empty) return [];
@@ -47,7 +46,6 @@ const getJoinedTrips = async (isFinished: boolean) => {
     .collection("trips")
     .where("status", isFinished ? "==" : "!=", "finished")
     .where("participants", "array-contains", uid)
-    .orderBy("createdAt", "desc")
     .get();
 
   if (docRef.empty) return [];

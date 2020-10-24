@@ -32,7 +32,8 @@ interface RequestListState {
 }
 
 const getInviteRequests = async (): Promise<Array<InviteRequestItem>> => {
-  const userId = firebase.auth().currentUser.uid;
+  const userId = firebase.auth().currentUser?.uid;
+  if (!userId) return [];
   const docRef = await firebase
     .firestore()
     .collection("requests")

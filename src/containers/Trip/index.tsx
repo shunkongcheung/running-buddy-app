@@ -18,7 +18,6 @@ const Trip: React.FC<TripProps> = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState<TabName>("upcoming");
   const upcoming = useTripListState(false);
-  const finished = useTripListState(true);
 
   const handleClose = useCallback(
     (isRefresh) => {
@@ -29,11 +28,6 @@ const Trip: React.FC<TripProps> = () => {
     },
     [upcoming.updateTrips]
   );
-
-  const handleFinished = useCallback(() => {
-    upcoming.updateTrips();
-    finished.updateTrips();
-  }, [upcoming.updateTrips, finished.updateTrips]);
 
   return (
     <Container>
@@ -70,26 +64,18 @@ const Trip: React.FC<TripProps> = () => {
             isFinished={false}
             loading={upcoming.loading}
             trips={upcoming.trips}
-            handleFinished={handleFinished}
           />
         </TabPane>
         <TabPane tabId="requested">
           <RequestList handleRequestUpdate={upcoming.updateTrips} />
         </TabPane>
-        <TabPane tabId="finished">
-          <TripList
-            isFinished={false}
-            loading={finished.loading}
-            trips={finished.trips}
-          />
-        </TabPane>
-        <TabPane tabId="finished">
-          <TripList
-            isFinished={false}
-            loading={finished.loading}
-            trips={finished.trips}
-          />
-        </TabPane>
+        {/* <TabPane tabId="finished"> */}
+        {/*   <TripList */}
+        {/*     isFinished={false} */}
+        {/*     loading={finished.loading} */}
+        {/*     trips={finished.trips} */}
+        {/*   /> */}
+        {/* </TabPane> */}
       </TabContent>
     </Container>
   );
