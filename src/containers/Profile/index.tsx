@@ -19,15 +19,15 @@ const Profile: React.FC<ProfileProps> = () => {
           <CardBody>
             <FormGroup>
               <label className={classNames.formLabel}>First Name</label>
-              <Input value={user.displayName.split(' ')[0]} alt="First Name"/>
+              <Input value={user.displayName.split(' ')[0]} alt="First Name" disabled/>
             </FormGroup>
             <FormGroup>
               <label className={classNames.formLabel}>Last Name</label>
-              <Input value={user.displayName.split(' ')[1]} alt="Last Name"/>
+              <Input value={user.displayName.split(' ')[1]} alt="Last Name" disabled/>
             </FormGroup>
             <FormGroup>
               <label className={classNames.formLabel}>Email</label>
-              <Input value={user.email} alt="Email"/>
+              <Input value={user.email} alt="Email" disabled/>
             </FormGroup>
 
             <Link href="/login">

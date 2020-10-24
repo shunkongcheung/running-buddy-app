@@ -1,14 +1,7 @@
-import React, { memo } from "react";
-import { useRouter } from "next/router";
+import React, {memo} from "react";
+import {useRouter} from "next/router";
 import firebase from "firebase";
-import {
-  Button,
-  Col,
-  Container,
-  ListGroup,
-  ListGroupItem,
-  Row,
-} from "reactstrap";
+import {Button, Container, ListGroup, ListGroupItem,} from "reactstrap";
 
 import AddBuddyModal from "./AddBuddyModal";
 import classNames from "./Buddy.module.css";
@@ -26,7 +19,8 @@ interface Buddy {
   buddyProfile: BuddyProfile;
 }
 
-interface BuddyProps {}
+interface BuddyProps {
+}
 
 const Buddy: React.FC<BuddyProps> = () => {
   const router = useRouter();
@@ -35,14 +29,14 @@ const Buddy: React.FC<BuddyProps> = () => {
 
   const updateBuddies = React.useCallback(async () => {
     // get user id
-    const { uid } = firebase.auth().currentUser;
+    const {uid} = firebase.auth().currentUser;
 
     // get data from firestore buddies
     const db = firebase.firestore();
     const docRef = await db
-      .collection("buddies")
-      .where("ownerUid", "==", uid)
-      .get();
+        .collection("buddies")
+        .where("ownerUid", "==", uid)
+        .get();
 
     // update buddies
     setBuddies(() => {
@@ -51,19 +45,19 @@ const Buddy: React.FC<BuddyProps> = () => {
       docRef.forEach((itm) => {
         const buddy = itm.data();
         const uid = itm.id;
-        buddies.push({ ...buddy, uid } as Buddy);
+        buddies.push({...buddy, uid} as Buddy);
       });
       return buddies;
     });
   }, []);
 
   const unlinkBuddy = React.useCallback(
-    async (buddyItemId: string) => {
-      const db = firebase.firestore();
-      await db.collection("buddies").doc(buddyItemId).delete();
-      await updateBuddies();
-    },
-    [updateBuddies]
+      async (buddyItemId: string) => {
+        const db = firebase.firestore();
+        await db.collection("buddies").doc(buddyItemId).delete();
+        await updateBuddies();
+      },
+      [updateBuddies]
   );
 
   const handleAddBuddyClose = React.useCallback((refresh?: boolean) => {
@@ -83,36 +77,43 @@ const Buddy: React.FC<BuddyProps> = () => {
   }, [router, updateBuddies]);
 
   return (
-    <Container>
-      <AddBuddyModal
-        isOpen={isOpenAddBuddy}
-        handleClose={handleAddBuddyClose}
-      />
-      <div className={classNames.heading}>
-        <h1>Your Buddy</h1>
-        <Button color="primary" onClick={() => setIsOpenAddBuddy(true)}>
-          Add Buddy
-        </Button>
-      </div>
-      <ListGroup>
-        {buddies.map(({ uid, buddyProfile: { displayName, email } }, idx) => (
-          <ListGroupItem key={`Buddy-${displayName}-${idx}-${uid}`}>
-            <Row>
-              <Col md={8} xs={8}>
-                <h3>{displayName}</h3>
-                <small>{email}</small>
-              </Col>
-              <Col md={4} xs={4} className={classNames.unlinkBtnContainer}>
-                <Button color="danger" onClick={() => unlinkBuddy(uid)}>
-                  Unlink
-                </Button>
-              </Col>
-            </Row>
-          </ListGroupItem>
-        ))}
-        {!buddies.length && <div className={classNames.msg}>Add a buddy!</div>}
-      </ListGroup>
-    </Container>
+      <Container>
+        <AddBuddyModal
+            isOpen={isOpenAddBuddy}
+            handleClose={handleAddBuddyClose}
+        />
+        <div className={classNames.heading}>
+          <h3>Buddies</h3>
+          <Button className={classNames.lineButtonBlue} onClick={() => setIsOpenAddBuddy(true)}>
+            Add Buddy
+          </Button>
+        </div>
+
+        <div className={classNames.listDiv}>
+
+          <ListGroup>
+            {buddies.map(({uid, buddyProfile: {displayName, email}}, idx) => (
+                <ListGroupItem key={`Buddy-${displayName}-${idx}-${uid}`} className={classNames.listItem}>
+                  <div className="media">
+                    <div className="media-left">
+                      <img src="/user.png" className="media-object" width={60}/>
+                    </div>
+                    <div className="media-body">
+                      <h5 className="media-heading">{displayName}</h5>
+                      <h6>{email}</h6>
+                    </div>
+                    <div className="media-right">
+                      <Button className={classNames.lineButtonRed} onClick={() => unlinkBuddy(uid)}>
+                        Unlink
+                      </Button>
+                    </div>
+                  </div>
+                </ListGroupItem>
+            ))}
+            {!buddies.length && <div className={classNames.msg}>Add a buddy!</div>}
+          </ListGroup>
+        </div>
+      </Container>
   );
 };
 
