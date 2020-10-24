@@ -33,4 +33,5 @@ export interface InviteRequest {
   status: InviteRequestStatus;
   tripUid: string;
   createdByUid: string;
+  createdAt: Date;
 }
