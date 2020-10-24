@@ -23,8 +23,16 @@ export interface Trip {
 
   participants: Array<string>;
   createdByUid: string;
-
+  startingPoint:string;
+  endingPoint:string;
   createdAt: Date;
+  stopPoints:Array<string>;
+  coordinates:Array<Coords>;
+}
+
+export interface Coords{
+  lat:string;
+  lng:string;
 }
 
 export type InviteRequestStatus = "pending" | "accepted" | "rejected";
