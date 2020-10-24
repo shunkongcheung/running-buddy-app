@@ -25,10 +25,10 @@ const getFinishedTrips = async () => {
     const data = item.data();
     trips.push({
       ...data,
-      uid: data.id,
+      uid: item.id,
       startAt: data.startAt.toDate(),
       createdAt: data.createdAt.toDate(),
-    });
+    } as TripItem);
   });
 
   return trips;
