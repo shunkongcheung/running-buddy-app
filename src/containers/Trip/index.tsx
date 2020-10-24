@@ -42,6 +42,11 @@ const Trip: React.FC<TripProps> = () => {
     }
   }, []);
 
+  const handleTabChange = useCallback((activeTab: TabName) => {
+    router.push("/trip");
+    setActiveTab(activeTab);
+  }, []);
+
   return (
     <Container>
       <EditTrip handleClose={handleClose} isOpen={isOpen} />
@@ -56,13 +61,13 @@ const Trip: React.FC<TripProps> = () => {
           activeName={activeTab}
           tabName="upcoming"
           label="Upcoming"
-          handleClick={setActiveTab}
+          handleClick={handleTabChange}
         />
         <TabNavItem
           activeName={activeTab}
           tabName="requested"
           label="Requested"
-          handleClick={setActiveTab}
+          handleClick={handleTabChange}
         />
       </Nav>
       <TabContent activeTab={activeTab}>
