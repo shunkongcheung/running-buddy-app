@@ -15,20 +15,43 @@ import classNames from "./Login.module.css";
 
 interface LoginProps {}
 
+const getLocation = (): Promise<{
+  coords: { latitude?: number; longitude?: number };
+}> =>
+  new Promise((resolve) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(resolve, () =>
+        resolve({ coords: { latitude: null, longitude: null } })
+      );
+    } else resolve({ coords: { latitude: null, longitude: null } });
+  });
+
 const Login: React.FC<LoginProps> = () => {
   const { storeToken } = useUserContext();
   const router = useRouter();
 
   const handleLogin = React.useCallback(async () => {
+    // login user
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     const {
-      user: { displayName },
+      user: { uid, displayName, email },
     } = await firebase.auth().signInWithPopup(googleAuthProvider);
 
     const accessToken = await firebase.auth().currentUser.getIdToken(true);
 
-    const { goTo } = router.query;
+    // get user current location
+    const {
+      coords: { latitude, longitude },
+    } = await getLocation();
 
+    // store user email to database
+    const db = firebase.firestore();
+    db.collection("registered-users")
+      .doc(uid)
+      .set({ email, displayName, latitude, longitude });
+
+    // redirect and store token
+    const { goTo } = router.query;
     storeToken(accessToken, displayName);
     router.push((goTo as string) || "/home");
   }, [storeToken, router]);
