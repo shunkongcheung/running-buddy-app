@@ -9,6 +9,7 @@ import {
   Spinner,
 } from "reactstrap";
 import firebase from "firebase";
+import Map from './Map'
 
 import { RegisteredUser, TripStatus, Trip } from "../../types";
 import { LineButton } from "../../components";
@@ -43,7 +44,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
   const uid = id as string;
 
   const [
-    { loading, startAt, createdByUid, createdAt, participants, name, status },
+    { loading, startAt, createdByUid, createdAt, participants, name, status,coordinates,startingPoint,endingPoint,stopPoints },
     setTrip,
   ] = React.useState<TripDetail>({
     name: "",
@@ -53,6 +54,10 @@ const TripDetail: React.FC<TripDetailProps> = () => {
     loading: true,
     createdByUid: "-1",
     status: "created",
+    coordinates:[],
+    startingPoint:"",
+    endingPoint:"",
+    stopPoints:[],
   });
 
   const handleBtnClick = React.useCallback(() => {
@@ -71,7 +76,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
         await firebase.firestore().collection("trips").doc(uid).get()
       ).data();
       const participants = await getParticipants(trip.participants);
-
+        
       setTrip({
         ...trip,
         participants,
@@ -92,7 +97,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
       </Container>
     );
 
-  console.log({ status });
+  console.log("stopPoints",stopPoints);
 
   return (
     <Container>
@@ -112,6 +117,15 @@ const TripDetail: React.FC<TripDetailProps> = () => {
                 </>
               )}
             </p>
+            <Map  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.googleAPIKey}`}
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `400px`, width: '100%' }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                  coordinates={coordinates}
+            />
+            <p>Location: {startingPoint} => {endingPoint}</p>
+            {stopPoints && Boolean(stopPoints.length)  && <p>Stops: {stopPoints.join(",")}</p>}
+
             <small>Created at {createdAt.toLocaleString()}</small>
           </CardText>
 
