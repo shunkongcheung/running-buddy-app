@@ -7,6 +7,7 @@ import AddBuddyModal from "./AddBuddyModal";
 import classNames from "./Buddy.module.css";
 
 import { Buddy as DataBuddy, RegisteredUser } from "../../types";
+import { getDistanceBetweenCoords, getUserCoord } from "../../utils";
 
 interface BuddyItem extends DataBuddy {
   uid: string;
@@ -49,9 +50,15 @@ const getBuddyUsers = async (
         .collection("registered-users")
         .doc(itm.buddyUid)
         .get();
-      const data = docRef.data() as RegisteredUser;
+      const data = docRef.data();
       const uid = docRef.id;
-      return { uid, ...data, buddyId: itm.uid } as BuddyUser;
+      const lastLoggedInAt = data.lastLoggedInAt.toDate();
+      return {
+        uid,
+        ...data,
+        lastLoggedInAt,
+        buddyId: itm.uid,
+      } as BuddyUser;
     })
   );
   return buddyUsers;
@@ -61,6 +68,13 @@ const Buddy: React.FC<BuddyProps> = () => {
   const router = useRouter();
   const [isOpenAddBuddy, setIsOpenAddBuddy] = React.useState(false);
   const [buddies, setBuddies] = React.useState<Array<BuddyUser>>([]);
+  const [userCoord, setUserCoord] = React.useState<{
+    longitude: number | null;
+    latitude: number | null;
+  }>({
+    longitude: null,
+    latitude: null,
+  });
 
   const updateBuddies = React.useCallback(async () => {
     const buddies = await getBuddies();
@@ -87,7 +101,12 @@ const Buddy: React.FC<BuddyProps> = () => {
       router.push("/login?goTo=/buddy");
       return;
     }
+    const initializeUserCoord = async () => {
+      const { coords } = await getUserCoord();
+      setUserCoord(coords);
+    };
     updateBuddies();
+    initializeUserCoord();
   }, [router, updateBuddies]);
 
   return (
@@ -108,30 +127,60 @@ const Buddy: React.FC<BuddyProps> = () => {
 
       <div className={classNames.listDiv}>
         <ListGroup>
-          {buddies.map(({ displayName, email, buddyId }, idx) => (
-            <ListGroupItem
-              key={`Buddy-${displayName}-${idx}-${buddyId}`}
-              className={classNames.listItem}
-            >
-              <div className="media">
-                <div className="media-left">
-                  <img src="/user.png" className="media-object" width={60} />
+          {buddies.map(
+            (
+              {
+                displayName,
+                email,
+                buddyId,
+                longitude,
+                latitude,
+                lastLoggedInAt,
+              },
+              idx
+            ) => (
+              <ListGroupItem
+                key={`Buddy-${displayName}-${idx}-${buddyId}`}
+                className={classNames.listItem}
+              >
+                <div className="media">
+                  <div className="media-left">
+                    <img src="/user.png" className="media-object" width={60} />
+                  </div>
+                  <div className="media-body">
+                    <h5 className="media-heading">{displayName}</h5>
+                    <h6>{email}</h6>
+                    <div>
+                      <small>
+                        Last Logged in at: {lastLoggedInAt.toLocaleString()}
+                      </small>
+                    </div>
+                    {userCoord.latitude !== null &&
+                      userCoord.longitude !== null && (
+                        <div>
+                          <small>
+                            About{" "}
+                            {getDistanceBetweenCoords(
+                              { longitude, latitude },
+                              userCoord
+                            ).toFixed()}{" "}
+                            km from you.
+                          </small>
+                        </div>
+                      )}
+                  </div>
+                  <div className="media-right">
+                    <Button
+                      className={classNames.lineButtonRed}
+                      onClick={() => unlinkBuddy(buddyId)}
+                    >
+                      Unlink
+                    </Button>
+                  </div>
                 </div>
-                <div className="media-body">
-                  <h5 className="media-heading">{displayName}</h5>
-                  <h6>{email}</h6>
-                </div>
-                <div className="media-right">
-                  <Button
-                    className={classNames.lineButtonRed}
-                    onClick={() => unlinkBuddy(buddyId)}
-                  >
-                    Unlink
-                  </Button>
-                </div>
-              </div>
-            </ListGroupItem>
-          ))}
+              </ListGroupItem>
+            )
+          )}
           {!buddies.length && (
             <div className={classNames.msg}>Add a buddy!</div>
           )}
