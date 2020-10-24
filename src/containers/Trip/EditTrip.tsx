@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import axios from "axios";
 import firebase from "firebase";
 import {
   Button,
@@ -9,7 +10,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
+  ModalFooter
 } from "reactstrap";
 
 import { Trip, InviteRequest } from "../../types";
@@ -22,7 +23,7 @@ interface EditTripModalProps {
 
 const EditTripModal: React.FC<EditTripModalProps> = ({
   handleClose,
-  isOpen,
+  isOpen
 }) => {
   const [trip, setTrip] = React.useState<Trip>({
     name: "",
@@ -31,35 +32,67 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
     participants: [],
     createdByUid: firebase.auth().currentUser?.uid || "",
     createdAt: new Date(),
+    startingPoint: "",
+    endingPoint: "",
+    stopPoints: [],
+    coordinates: []
   });
 
+  const makeGetRequest = async address => {
+    return axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.googleAPIKey}`
+    );
+  };
+
   const handleSubmit = React.useCallback(
-    async (e) => {
+    async e => {
       if (e) e.preventDefault();
       const db = firebase.firestore();
 
-      try {
-        const tripRef = await db
-          .collection("trips")
-          .add({ ...trip, participants: [] });
-        const tripUid = tripRef.id;
+      const listAddresses = [
+        trip.startingPoint,
+        ...trip.stopPoints,
+        trip.endingPoint
+      ];
 
-        await Promise.all([
-          ...trip.participants.map(async (invitedUserUid: string) => {
-            const request: InviteRequest = {
-              status: "pending",
-              tripUid,
-              invitedUserUid,
-              createdByUid: trip.createdByUid,
-            };
-            return db.collection("requests").add(request);
-          }),
-        ]);
+      const requestList = listAddresses.map(address => makeGetRequest(address));
 
-        handleClose(true);
-      } catch (err) {
-        console.error(err);
-      }
+
+      const responses = await Promise.all(requestList);
+             const coords = responses.map(res => {
+              if (
+                res.data &&
+                res.data.results[0].geometry &&
+                res.data.results[0].geometry.location
+              ) {
+                return res.data.results[0].geometry.location;
+              }
+            });
+      
+           
+      
+        try {
+          const tripRef = await db
+            .collection("trips")
+            .add({ ...trip, participants: [],coordinates:coords });
+          const tripUid = tripRef.id;
+
+          await Promise.all([
+            ...trip.participants.map(async (invitedUserUid: string) => {
+              const request: InviteRequest = {
+                status: "pending",
+                tripUid,
+                invitedUserUid,
+                createdByUid: trip.createdByUid
+              };
+              return db.collection("requests").add(request);
+            })
+          ]);
+
+          handleClose(true);
+        } catch (err) {
+          console.error(err);
+        }
     },
     [trip]
   );
@@ -67,18 +100,53 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
   const handleChange = React.useCallback(
     ({ target: { value, name, checked } }) => {
       if (name === "participants") {
-        setTrip((o) => {
+        setTrip(o => {
           let { participants } = o;
           if (checked) participants.push(value);
-          else participants = participants.filter((itm) => itm !== value);
+          else participants = participants.filter(itm => itm !== value);
           return { ...o, participants };
         });
       } else if (name === "startAt") {
-        setTrip((o) => ({ ...o, [name]: new Date(value) }));
-      } else setTrip((o) => ({ ...o, [name]: value }));
+        setTrip(o => ({ ...o, [name]: new Date(value) }));
+      } 
+      else if(name==="startingpoint"){
+        setTrip(o => ({ ...o,  startingPoint:value }));
+      }
+      else if(name==="endingpoint"){
+        setTrip(o => ({ ...o,  endingPoint:value }));
+      }
+      else setTrip(o => ({ ...o, [name]: value }));
+
     },
     []
   );
+
+  // handle click event of the Add button
+  const handleAddClick = () => {
+    console.log("handleAddClick");
+    const stops = [...trip.stopPoints, ""];
+    setTrip({ ...trip, stopPoints: stops });
+  };
+
+  const handleStopChange = (e, index) => {
+    const { value } = e.target;
+    const stops = [...trip.stopPoints];
+    stops[index] = value;
+    setTrip({
+      ...trip,
+      stopPoints: stops
+    });
+  };
+
+  // handle click event of the Remove button
+  const handleRemoveStop = index => {
+    const stops = [...trip.stopPoints];
+    stops.splice(index, 1);
+    setTrip({
+      ...trip,
+      stopPoints: stops
+    });
+  };
 
   return (
     <Modal isOpen={isOpen} toggle={() => handleClose()}>
@@ -98,6 +166,56 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               onChange={handleChange}
             />
           </FormGroup>
+          <FormGroup>
+            <Label for="starting-point">Starting Point</Label>
+            <Input
+              type="text"
+              name="startingpoint"
+              id="starting-point"
+              onChange={handleChange}
+              placeholder="Starting point"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for="starting-point">Ending Point</Label>
+            <Input
+              type="text"
+              name="endingpoint"
+              id="ending-point"
+              onChange={handleChange}
+              placeholder="Ending point"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>Add Stops</Label> &nbsp;
+            <Button color="success" onClick={handleAddClick}>
+            +
+          </Button>
+          </FormGroup>
+         
+
+          {trip.stopPoints.map((stop, i) => (
+            <>
+              <FormGroup>
+                <Label for={`stopPoint${i + 1}`}>Stop Point {i}</Label>
+                <Input
+                  type="text"
+                  name={`stopPoint${i}`}
+                  id="ending-point"
+                  onChange={e => handleStopChange(e, i)}
+                  value={stop}
+                  placeholder={`Stop point ${i + 1}`}
+                />
+              </FormGroup>
+              <div className="btn-box">
+                {trip.stopPoints.length > 0 && (
+                  <Button color="danger" onClick={() => handleRemoveStop(i)}>
+                    -
+                  </Button>
+                )}
+              </div>
+            </>
+          ))}
           <ParticipantsField handleChange={handleChange} />
           <FormGroup>
             <Label for="startAt">Start At</Label>
