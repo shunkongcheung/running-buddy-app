@@ -3,7 +3,6 @@ import Head from "next/head";
 import firebase from "firebase/app";
 import { FirebaseAuthProvider } from "@react-firebase/auth";
 
-import { UserContext, useUserProvider } from "../contexts/userContext";
 import Layout from "../containers/Layout";
 
 import "firebase/auth";
@@ -21,41 +20,38 @@ const config = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const userContext = useUserProvider();
   return (
     <FirebaseAuthProvider firebase={firebase} {...config}>
-      <UserContext.Provider value={userContext}>
-        <Head>
-          <title>Running buddy app</title>
-          <meta
-            name="description"
-            content="Schedule meetups with friends for running"
-          />
-          <meta name="keywords" content="running,exercise,meetup,community" />
-          <meta name="author" content="quantum mobs" />
-          <link rel="icon" href="/favicon.ico" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
-            rel="stylesheet"
-          />
-        </Head>
+      <Head>
+        <title>Running buddy app</title>
+        <meta
+          name="description"
+          content="Schedule meetups with friends for running"
+        />
+        <meta name="keywords" content="running,exercise,meetup,community" />
+        <meta name="author" content="quantum mobs" />
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
 
-        <Layout>
-          <style jsx global>{`
-            html,
-            body {
-              padding: 0;
-              margin: 0;
-              font-family: Roboto;
-            }
+      <Layout>
+        <style jsx global>{`
+          html,
+          body {
+            padding: 0;
+            margin: 0;
+            font-family: Roboto;
+          }
 
-            * {
-              box-sizing: border-box;
-            }
-          `}</style>
-          <Component {...pageProps} />
-        </Layout>
-      </UserContext.Provider>
+          * {
+            box-sizing: border-box;
+          }
+        `}</style>
+        <Component {...pageProps} />
+      </Layout>
     </FirebaseAuthProvider>
   );
 }
