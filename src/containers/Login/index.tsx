@@ -49,7 +49,7 @@ const Login: React.FC<LoginProps> = () => {
 
     // redirect and store token
     const { goTo } = router.query;
-    router.push((goTo as string) || "/home");
+    router.push((goTo as string) || "/trip");
   }, [router]);
 
   return (

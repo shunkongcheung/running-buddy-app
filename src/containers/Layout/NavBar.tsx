@@ -28,11 +28,6 @@ const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <Link href="/home">
-                <NavLink>Home</NavLink>
-              </Link>
-            </NavItem>
-            <NavItem>
               <Link href="/trip">
                 <NavLink>Trip</NavLink>
               </Link>

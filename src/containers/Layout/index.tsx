@@ -13,11 +13,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [displayName, setDisplayName] = React.useState("");
 
   React.useEffect(() => {
-    const unsubscribe = firebase
-      .auth()
-      .onAuthStateChanged(({ displayName }) => {
-        setDisplayName(displayName);
-      });
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      setDisplayName(user?.displayName || "");
+    });
 
     return () => {
       unsubscribe();
