@@ -13,11 +13,13 @@
     display: flex;
 }
 
+.button:hover {
+    background: #1860bf;
+}
+
 .card {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 140px auto;
     max-width: 400px;
-    margin-top: 40%;
     border-radius: 5px;
     /*margin-top: 20px;*/
     padding: 40px 0 20px 0;
