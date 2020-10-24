@@ -14,19 +14,9 @@ import firebase from "firebase";
 import classNames from "./Login.module.css";
 
 import { RegisteredUser } from "../../types";
+import { getUserCoord } from "../../utils";
 
 interface LoginProps {}
-
-const getLocation = (): Promise<{
-  coords: { latitude?: number; longitude?: number };
-}> =>
-  new Promise((resolve) => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(resolve, () =>
-        resolve({ coords: { latitude: null, longitude: null } })
-      );
-    } else resolve({ coords: { latitude: null, longitude: null } });
-  });
 
 const Login: React.FC<LoginProps> = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -42,7 +32,7 @@ const Login: React.FC<LoginProps> = () => {
     // get user current location
     const {
       coords: { latitude, longitude },
-    } = await getLocation();
+    } = await getUserCoord();
 
     setIsLoading(true);
 
