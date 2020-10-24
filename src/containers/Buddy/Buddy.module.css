@@ -1,18 +1,78 @@
 .heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #444;
 }
+
 .msg {
-  margin-top: 25px;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: center;
-  color: #777;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    color: #777;
 }
+
 .unlinkBtnContainer {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.lineButton {
+    border: 2px solid black;
+    background-color: white;
+    color: black;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #444;
+}
+
+.msg {
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    color: #777;
+}
+
+.unlinkBtnContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.lineButtonBlue {
+    border: 2px solid dodgerblue;
+    background-color: white;
+    color: dodgerblue;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.lineButtonRed {
+    border: 2px solid #ef3648;
+    background-color: white;
+    color: #ef3648;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.listDiv {
+    margin: 10px;
+}
+
+.listItem {
+    padding: .75rem;
 }
