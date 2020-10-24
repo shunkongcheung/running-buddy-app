@@ -5,7 +5,6 @@ import {
   Navbar,
   NavbarToggler,
   NavbarBrand,
-  NavbarText,
   Nav,
   NavItem,
   NavLink,
@@ -41,13 +40,12 @@ const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
                 <NavLink>Buddy</NavLink>
               </Link>
             </NavItem>
-            <NavItem>
-              <Link href="/profile">
-                <NavLink>Profile</NavLink>
-              </Link>
-            </NavItem>
           </Nav>
-          {!!displayName && <NavbarText>{displayName}</NavbarText>}
+          {!!displayName && (
+            <Link href="/profile">
+              <NavLink>{displayName}</NavLink>
+            </Link>
+          )}
         </Collapse>
       </Navbar>
     </>

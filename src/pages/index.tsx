@@ -1,4 +1,3 @@
-import Home from '../containers/Home'
+import Landing from "../containers/Landing";
 
-export default ()  => <Home />
-    
+export default () => <Landing />;
