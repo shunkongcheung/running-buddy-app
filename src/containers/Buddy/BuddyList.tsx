@@ -1,10 +1,10 @@
-import React, { memo } from "react";
+import React, {memo} from "react";
 import firebase from "firebase";
-import { Container, ListGroup, ListGroupItem, Media } from "reactstrap";
+import {Container, ListGroup, ListGroupItem, Media} from "reactstrap";
 
-import { RegisteredUser } from "../../types";
-import { LineButton, PlaceHolder } from "../../components";
-import { getDistanceBetweenCoords, getUserCoord } from "../../utils";
+import {RegisteredUser} from "../../types";
+import {LineButton, PlaceHolder} from "../../components";
+import {getDistanceBetweenCoords, getUserCoord} from "../../utils";
 
 interface BuddyUser extends RegisteredUser {
   buddyId: string;
@@ -61,7 +61,7 @@ const BuddyList: React.FC<BuddyListProps> = ({ buddies, updateBuddies }) => {
             <ListGroupItem key={`Buddy-${displayName}-${idx}-${buddyId}`}>
               <Media>
                 <Media left>
-                  <Media object src="/user.png" width={60} />
+                  <Media object src="/user_1.png" width={60}/>
                 </Media>
                 <Media body>
                   <Media heading>{displayName}</Media>

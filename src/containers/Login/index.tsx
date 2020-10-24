@@ -1,22 +1,15 @@
-import React, { memo } from "react";
-import { useRouter } from "next/router";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
-  Container,
-  Spinner,
-} from "reactstrap";
+import React, {memo} from "react";
+import {useRouter} from "next/router";
+import {Button, Card, CardBody, CardText, CardTitle, Container, Spinner,} from "reactstrap";
 import firebase from "firebase";
 
 import classNames from "./Login.module.css";
 
-import { RegisteredUser } from "../../types";
-import { getUserCoord } from "../../utils";
+import {RegisteredUser} from "../../types";
+import {getUserCoord} from "../../utils";
 
-interface LoginProps {}
+interface LoginProps {
+}
 
 const Login: React.FC<LoginProps> = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -26,7 +19,7 @@ const Login: React.FC<LoginProps> = () => {
     // login user
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     const {
-      user: { uid, displayName, email },
+      user: {uid, displayName, email, photoURL},
     } = await firebase.auth().signInWithPopup(googleAuthProvider);
 
     // get user current location
@@ -39,6 +32,7 @@ const Login: React.FC<LoginProps> = () => {
     // store user email to database
     const user: RegisteredUser = {
       email,
+      photoURL,
       displayName,
       latitude,
       longitude,

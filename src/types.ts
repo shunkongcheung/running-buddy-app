@@ -1,6 +1,7 @@
 export interface RegisteredUser {
   displayName: string;
   email: string;
+  photoURL: string;
   latitude: number | null;
   longitude: number | null;
   lastLoggedInAt: Date;
