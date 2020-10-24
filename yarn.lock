@@ -5400,6 +5400,11 @@ source-map@^0.5.0, source-map@^0.5.6:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
 
+sphere-knn@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/sphere-knn/-/sphere-knn-1.4.0.tgz#27f3120cdfade79efbbbc2e147a4b8d21c831537"
+  integrity sha512-sFdsABoSClBxz3DzO2yvHwbbV4zIRvgrIeC1qqWPYzKMtT26xCF/r5xG9Sj7iLFG9GJIt1WnT6VpYaQeRvIzPA==
+
 split-string@^3.0.1, split-string@^3.0.2:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/split-string/-/split-string-3.1.0.tgz#7cb09dda3a86585705c64b39a6466038682e8fe2"

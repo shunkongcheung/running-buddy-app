@@ -4,6 +4,13 @@
     margin-bottom: 0.1rem;
 }
 
+.startEndPins {
+    color: #333333;
+    font-size: 1.8em;
+    margin: 4px 10px 4px 0;
+    border-radius: 50%;
+}
+
 .stopRemoveIcon {
     color: #ef3648;
     cursor: pointer;
@@ -16,3 +23,14 @@
     background: #ef3648;
     color: #ffffff
 }
+
+.stopsWell {
+    background: #eeeeee;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px auto;
+    width: 80%;
+}
+
+
+

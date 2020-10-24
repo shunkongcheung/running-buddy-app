@@ -13,16 +13,14 @@ export interface Buddy {
   buddyUid: string;
 }
 
-export type RoundStatus = "created" | "started" | "finished";
-
 export interface Round {
   tripUid: string;
-  status: RoundStatus;
   startAt: Date;
   endAt: Date;
   distanceKm: number;
-  maxSpeed: number;
-  minSpeed: number;
+  calories: number;
+  maxKmPerHour: number;
+  minKmPerHour: number;
 }
 
 export interface Trip {
