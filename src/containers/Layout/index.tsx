@@ -1,6 +1,7 @@
 import React, { memo, ReactNode } from "react";
+import { useRouter } from "next/router";
+import firebase from "firebase";
 
-import { useUserContext } from "../../contexts";
 import NavBar from "./NavBar";
 
 interface LayoutProps {
@@ -8,7 +9,14 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { displayName } = useUserContext();
+  const { pathname } = useRouter();
+  const [displayName, setDisplayName] = React.useState("");
+
+  React.useEffect(() => {
+    const { displayName } = firebase.auth().currentUser || {};
+    setDisplayName(displayName);
+  }, [pathname]);
+
   return (
     <main>
       <NavBar displayName={displayName} />
