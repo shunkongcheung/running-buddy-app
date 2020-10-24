@@ -40,6 +40,8 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
     coordinates: [],
   });
 
+  const [coords,setCoords]= React.useState({})
+
   const makeGetRequest = async (address) => {
     return axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.googleAPIKey}`
@@ -64,7 +66,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
       const responses = await Promise.all(requestList);
       const coords = responses.map((res) => {
         if (
-          res.data &&
+          res && res.data &&
           res.data.results[0].geometry &&
           res.data.results[0].geometry.location
         ) {
@@ -146,6 +148,27 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
     });
   };
 
+  const handleBlur= async (e)=>{
+
+    const res= await makeGetRequest(e.target.value);
+    console.log("res",res)
+    console.log("v",e.target.value)
+    if (
+        res && res.data &&
+        res.data.results[0].geometry &&
+        res.data.results[0].geometry.location
+      ) {
+        
+        const latLang= res.data.results[0].geometry.location;
+        setCoords({
+          ...coords,
+          [e.target.name]:{placeName:e.target.value, location:latLang}
+        })
+      }
+
+      console.log("coords",coords)
+  }
+
   return (
     <Modal isOpen={isOpen} toggle={() => handleClose()}>
       <ModalHeader toggle={() => handleClose()}>
@@ -173,8 +196,11 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               name="startingpoint"
               id="starting-point"
               onChange={handleChange}
+              onBlur={handleBlur}
+              list="browsers"
               placeholder="Starting point"
             />
+             
           </FormGroup>
           <FormGroup>
             <Label for="starting-point">Ending Point</Label>
@@ -183,6 +209,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               name="endingpoint"
               id="ending-point"
               onChange={handleChange}
+              onBlur={handleBlur}
               placeholder="Ending point"
             />
           </FormGroup>
@@ -203,6 +230,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
                   id="ending-point"
                   onChange={(e) => handleStopChange(e, i)}
                   value={stop}
+                  onBlur={handleBlur}
                   placeholder={`Stop point ${i + 1}`}
                 />
               </FormGroup>
@@ -215,7 +243,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               </div>
             </>
           ))}
-          <ParticipantsField handleChange={handleChange} />
+          <ParticipantsField coords={coords} handleChange={handleChange} />
           <FormGroup>
             <Label for="startAt" className={classNames.formLabel}>
               Start At
