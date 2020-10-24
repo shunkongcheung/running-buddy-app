@@ -1,10 +1,18 @@
 import React, { memo, useCallback } from "react";
-import { Card, CardBody, CardText, CardTitle, Container } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardText,
+  CardTitle,
+  Container,
+  ListGroup,
+} from "reactstrap";
 import firebase from "firebase";
 import Map from "./Map";
 
 import { LineButton } from "../../components";
 
+import RoundItem from "./RoundItem";
 import classNames from "./TripDetail.module.css";
 import useTripDetailState from "./useTripDetailState";
 import useEditRound from "./useEditRound";
@@ -16,6 +24,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
 
   const {
     participants,
+    rounds,
     coordinates,
     startingPoint,
     endingPoint,
@@ -68,8 +77,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
 
             <small>Created at {createdAt.toLocaleString()}</small>
           </CardText>
-
-          {createdByUid === userId && status !== "finished" && (
+          {createdByUid === userId && (
             <div className={classNames.btnContainer}>
               <LineButton
                 className={classNames.statusBtn}
@@ -78,6 +86,13 @@ const TripDetail: React.FC<TripDetailProps> = () => {
                 {started ? "Finish" : "Start"}
               </LineButton>
             </div>
+          )}
+          {rounds.length && (
+            <ListGroup className={classNames.roundList}>
+              {rounds.map((round, idx) => (
+                <RoundItem key={`RoundItem-${idx}`} {...round} />
+              ))}
+            </ListGroup>
           )}
         </CardBody>
       </Card>

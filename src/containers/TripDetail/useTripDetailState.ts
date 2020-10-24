@@ -31,9 +31,9 @@ const getRounds = async (roundIds: Array<string>): Promise<Array<Round>> => {
     })
   );
   rounds.sort((a, b) => {
-    if (a.startAt < b.startAt) return -1;
+    if (a.startAt < b.startAt) return 1;
     if (a.startAt === b.startAt) return 0;
-    if (a.startAt > b.startAt) return 1;
+    if (a.startAt > b.startAt) return -1;
   });
   return rounds;
 };
@@ -45,7 +45,6 @@ const getParticipants = async (
   return Promise.all(
     userIds.map(async (userId) => {
       const docRef = await db.collection("registered-users").doc(userId).get();
-      console.log("hey here...", docRef.data());
       return docRef.data() as RegisteredUser;
     })
   );

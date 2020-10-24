@@ -95,7 +95,8 @@ function useEditRound() {
   }, []);
 
   const finishRound = useCallback(async () => {
-    const roundId = await createRound(roundData.current);
+    const endAt = new Date();
+    const roundId = await createRound({ ...roundData.current, endAt });
     await updateTripAddRound(roundId, tripUid);
 
     prevCoord.current = null;
