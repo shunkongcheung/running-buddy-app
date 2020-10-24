@@ -1,14 +1,15 @@
 import React, { memo } from "react";
 import { useRouter } from "next/router";
 import firebase from "firebase";
-import { Container, ListGroup, ListGroupItem, Media } from "reactstrap";
+import { Container } from "reactstrap";
 
 import AddBuddyModal from "./AddBuddyModal";
 import classNames from "./Buddy.module.css";
 
 import { LineButton } from "../../components";
 import { Buddy as DataBuddy, RegisteredUser } from "../../types";
-import { getDistanceBetweenCoords, getUserCoord } from "../../utils";
+
+import BuddyList from "./BuddyList";
 
 interface BuddyItem extends DataBuddy {
   uid: string;
@@ -69,28 +70,12 @@ const Buddy: React.FC<BuddyProps> = () => {
   const router = useRouter();
   const [isOpenAddBuddy, setIsOpenAddBuddy] = React.useState(false);
   const [buddies, setBuddies] = React.useState<Array<BuddyUser>>([]);
-  const [userCoord, setUserCoord] = React.useState<{
-    longitude: number | null;
-    latitude: number | null;
-  }>({
-    longitude: null,
-    latitude: null,
-  });
 
   const updateBuddies = React.useCallback(async () => {
     const buddies = await getBuddies();
     const buddyUsers = await getBuddyUsers(buddies);
     setBuddies(buddyUsers);
   }, []);
-
-  const unlinkBuddy = React.useCallback(
-    async (buddyId: string) => {
-      const db = firebase.firestore();
-      await db.collection("buddies").doc(buddyId).delete();
-      await updateBuddies();
-    },
-    [updateBuddies]
-  );
 
   const handleAddBuddyClose = React.useCallback((refresh?: boolean) => {
     if (refresh) updateBuddies();
@@ -102,13 +87,8 @@ const Buddy: React.FC<BuddyProps> = () => {
       router.push("/login?goTo=/buddy");
       return;
     }
-    const initializeUserCoord = async () => {
-      const { coords } = await getUserCoord();
-      setUserCoord(coords);
-    };
     updateBuddies();
-    initializeUserCoord();
-  }, [router, updateBuddies]);
+  }, []);
 
   return (
     <Container>
@@ -125,65 +105,7 @@ const Buddy: React.FC<BuddyProps> = () => {
           Add Buddy
         </LineButton>
       </div>
-
-      <div className={classNames.listDiv}>
-        <ListGroup>
-          {buddies.map(
-            (
-              {
-                displayName,
-                email,
-                buddyId,
-                longitude,
-                latitude,
-                lastLoggedInAt,
-              },
-              idx
-            ) => (
-              <ListGroupItem key={`Buddy-${displayName}-${idx}-${buddyId}`}>
-                <Media>
-                  <Media left>
-                    <Media object src="/user.png" width={60} />
-                  </Media>
-                  <Media body>
-                    <h5 className="media-heading">{displayName}</h5>
-                    <h6>{email}</h6>
-                    <Media>
-                      <small>
-                        Last Logged in at: {lastLoggedInAt.toLocaleString()}
-                      </small>
-                    </Media>
-                    {userCoord.latitude !== null &&
-                      userCoord.longitude !== null && (
-                        <div>
-                          <small>
-                            About{" "}
-                            {getDistanceBetweenCoords(
-                              { longitude, latitude },
-                              userCoord
-                            ).toFixed()}{" "}
-                            km from you.
-                          </small>
-                        </div>
-                      )}
-                  </Media>
-                  <Media right>
-                    <LineButton
-                      lineColor="#ef3648"
-                      onClick={() => unlinkBuddy(buddyId)}
-                    >
-                      Unlink
-                    </LineButton>
-                  </Media>
-                </Media>
-              </ListGroupItem>
-            )
-          )}
-          {!buddies.length && (
-            <div className={classNames.msg}>Add a buddy!</div>
-          )}
-        </ListGroup>
-      </div>
+      <BuddyList buddies={buddies} updateBuddies={updateBuddies} />
     </Container>
   );
 };
