@@ -1,15 +1,20 @@
-import React, {memo} from "react"
-import { Alert } from 'reactstrap'
+import React, { memo } from "react";
+import { useRouter } from "next/router";
+import firebase from "firebase";
+import { Alert } from "reactstrap";
 
-interface HomeProps{
+interface HomeProps {}
 
-}
+const Home: React.FC<HomeProps> = () => {
+  const router = useRouter();
+  React.useEffect(() => {
+    if (!firebase.auth().currentUser) router.push("/login");
+  }, [router]);
+  return (
+    <>
+      <Alert color="primary">Everything is Great</Alert>
+    </>
+  );
+};
 
-const Home:React.FC<HomeProps> = () => {
-	
-	return (<>
-		<Alert color="primary" >Everything is Great</Alert>
-					</>);
-}
-
-export default memo(Home)
+export default memo(Home);
