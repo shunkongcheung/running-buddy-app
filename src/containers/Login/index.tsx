@@ -11,7 +11,6 @@ import {
 } from "reactstrap";
 import firebase from "firebase";
 
-import { useUserContext } from "../../contexts";
 import classNames from "./Login.module.css";
 
 import { RegisteredUser } from "../../types";
@@ -30,7 +29,6 @@ const getLocation = (): Promise<{
   });
 
 const Login: React.FC<LoginProps> = () => {
-  const { storeToken } = useUserContext();
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
 
@@ -40,8 +38,6 @@ const Login: React.FC<LoginProps> = () => {
     const {
       user: { uid, displayName, email },
     } = await firebase.auth().signInWithPopup(googleAuthProvider);
-
-    const accessToken = await firebase.auth().currentUser.getIdToken(true);
 
     // get user current location
     const {
@@ -63,9 +59,8 @@ const Login: React.FC<LoginProps> = () => {
 
     // redirect and store token
     const { goTo } = router.query;
-    storeToken(accessToken, displayName);
     router.push((goTo as string) || "/home");
-  }, [storeToken, router]);
+  }, [router]);
 
   return (
     <>
