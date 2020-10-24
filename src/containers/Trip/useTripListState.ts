@@ -12,14 +12,14 @@ interface TripListState {
   trips: Array<TripItem>;
 }
 
-const getSelfCreatedTrips = async (isFinished: boolean) => {
+const getSelfCreatedTrips = async () => {
   const { uid } = firebase.auth().currentUser || {};
   const db = firebase.firestore();
 
   const docRef = await db
     .collection("trips")
-    .where("status", isFinished ? "==" : "!=", "finished")
     .where("createdByUid", "==", uid)
+    .orderBy("createdAt", "desc")
     .get();
 
   if (docRef.empty) return [];
@@ -28,23 +28,18 @@ const getSelfCreatedTrips = async (isFinished: boolean) => {
   docRef.forEach((item) => {
     const data = item.data();
     const uid = item.id;
-    trips.push({
-      ...data,
-      uid,
-      startAt: data.startAt.toDate(),
-      createdAt: data.createdAt.toDate(),
-    } as TripItem);
+    const createdAt = data.createdAt.toDate();
+    trips.push({ ...data, uid, createdAt } as TripItem);
   });
   return trips;
 };
 
-const getJoinedTrips = async (isFinished: boolean) => {
+const getJoinedTrips = async () => {
   const { uid } = firebase.auth().currentUser;
   const db = firebase.firestore();
 
   const docRef = await db
     .collection("trips")
-    .where("status", isFinished ? "==" : "!=", "finished")
     .where("participants", "array-contains", uid)
     .get();
 
@@ -54,17 +49,13 @@ const getJoinedTrips = async (isFinished: boolean) => {
   docRef.forEach((item) => {
     const data = item.data();
     const uid = item.id;
-    trips.push({
-      ...data,
-      uid,
-      startAt: data.startAt.toDate(),
-      createdAt: data.createdAt.toDate(),
-    } as TripItem);
+    const createdAt = data.createdAt.toDate();
+    trips.push({ ...data, uid, createdAt } as TripItem);
   });
   return trips;
 };
 
-function useTripListState(isFinished: boolean) {
+function useTripListState() {
   const [state, setState] = useState<TripListState>({
     loading: true,
     trips: [],
@@ -73,8 +64,8 @@ function useTripListState(isFinished: boolean) {
   const updateTrips = useCallback(async () => {
     setState((o) => ({ ...o, loading: true }));
     const [selfTrips, joinedTrips] = await Promise.all([
-      getSelfCreatedTrips(isFinished),
-      getJoinedTrips(isFinished),
+      getSelfCreatedTrips(),
+      getJoinedTrips(),
     ]);
     const trips = [...selfTrips, ...joinedTrips].sort((a, b) => {
       const aTime = a.createdAt.getTime();
@@ -85,11 +76,11 @@ function useTripListState(isFinished: boolean) {
     });
 
     setState({ loading: false, trips });
-  }, [isFinished]);
+  }, []);
 
   useEffect(() => {
     updateTrips();
-  }, [isFinished]);
+  }, []);
 
   return { ...state, updateTrips };
 }
