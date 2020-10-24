@@ -6,6 +6,7 @@ import { Button, Container, ListGroup, ListGroupItem } from "reactstrap";
 import AddBuddyModal from "./AddBuddyModal";
 import classNames from "./Buddy.module.css";
 
+import { LineButton} from '../../components'
 import { Buddy as DataBuddy, RegisteredUser } from "../../types";
 import { getDistanceBetweenCoords, getUserCoord } from "../../utils";
 
@@ -117,12 +118,12 @@ const Buddy: React.FC<BuddyProps> = () => {
       />
       <div className={classNames.heading}>
         <h3>Buddies</h3>
-        <Button
-          className={classNames.lineButtonBlue}
+        <LineButton
+					lineColor="dodgerblue"
           onClick={() => setIsOpenAddBuddy(true)}
         >
           Add Buddy
-        </Button>
+        </LineButton>
       </div>
 
       <div className={classNames.listDiv}>
@@ -170,12 +171,12 @@ const Buddy: React.FC<BuddyProps> = () => {
                       )}
                   </div>
                   <div className="media-right">
-                    <Button
-                      className={classNames.lineButtonRed}
+                    <LineButton
+											lineColor="#ef3648"
                       onClick={() => unlinkBuddy(buddyId)}
                     >
                       Unlink
-                    </Button>
+                    </LineButton>
                   </div>
                 </div>
               </ListGroupItem>
