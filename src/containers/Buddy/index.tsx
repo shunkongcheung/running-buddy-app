@@ -39,10 +39,7 @@ const Buddy: React.FC<BuddyProps> = () => {
       <Container className={classNames.heading}>
         <h3>Buddies</h3>
         <div>
-          <LineButton
-            lineColor="dodgerblue"
-            onClick={() => setIsOpenAddBuddy(true)}
-          >
+          <LineButton onClick={() => setIsOpenAddBuddy(true)}>
             Add Buddy
           </LineButton>
         </div>
