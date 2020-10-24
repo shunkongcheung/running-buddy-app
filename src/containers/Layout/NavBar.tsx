@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import Link from "next/link";
 import {
+  Container,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -19,7 +20,7 @@ const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <>
+    <Container>
       <Navbar color="light" light expand="md">
         <Link href="/">
           <NavbarBrand href="/">RUNNING BUDDY</NavbarBrand>
@@ -45,7 +46,7 @@ const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
           )}
         </Collapse>
       </Navbar>
-    </>
+    </Container>
   );
 };
 
