@@ -1,3 +1,9 @@
 import Trip from "../../containers/Trip";
+import { useFirebaseAuthReady } from "../../hooks";
 
-export default () => <Trip />;
+export default () => {
+  const ready = useFirebaseAuthReady();
+  if (!ready) return <></>;
+
+  return <Trip />;
+};
