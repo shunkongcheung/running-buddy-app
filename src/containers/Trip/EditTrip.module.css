@@ -3,3 +3,16 @@
     font-size: 14px;
     margin-bottom: 0.1rem;
 }
+
+.stopRemoveIcon {
+    color: #ef3648;
+    cursor: pointer;
+    font-size: 2em;
+    margin: 5px 0 5px 10px;
+    border-radius: 50%;
+}
+
+.stopRemoveIcon:hover {
+    background: #ef3648;
+    color: #ffffff
+}

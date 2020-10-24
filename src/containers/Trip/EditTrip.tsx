@@ -5,18 +5,21 @@ import {
   Button,
   Form,
   FormGroup,
-  Label,
   Input,
+  Label,
+  Media,
   Modal,
-  ModalHeader,
   ModalBody,
   ModalFooter,
+  ModalHeader
 } from "reactstrap";
 
 import { InviteRequest, Trip } from "../../types";
 import ParticipantsField from "./ParticipantsField";
 
 import classNames from "./EditTrip.module.css";
+
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 interface EditTripModalProps {
   handleClose: (refresh?: boolean) => any;
@@ -25,7 +28,7 @@ interface EditTripModalProps {
 
 const EditTripModal: React.FC<EditTripModalProps> = ({
   handleClose,
-  isOpen,
+  isOpen
 }) => {
   const [trip, setTrip] = React.useState<Trip>({
     name: "",
@@ -36,32 +39,32 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
     startingPoint: "",
     endingPoint: "",
     stopPoints: [],
-    coordinates: [],
+    coordinates: []
   });
 
-  const makeGetRequest = async (address) => {
+  const [coords, setCoords] = React.useState({});
+
+  const makeGetRequest = async address => {
     return axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.googleAPIKey}`
     );
   };
 
   const handleSubmit = React.useCallback(
-    async (e) => {
+    async e => {
       if (e) e.preventDefault();
       const db = firebase.firestore();
 
       const listAddresses = [
         trip.startingPoint,
         ...trip.stopPoints,
-        trip.endingPoint,
+        trip.endingPoint
       ];
 
-      const requestList = listAddresses.map((address) =>
-        makeGetRequest(address)
-      );
+      const requestList = listAddresses.map(address => makeGetRequest(address));
 
       const responses = await Promise.all(requestList);
-      const coords = responses.map((res) => {
+      const coords = responses.map(res => {
         if (
           res.data &&
           res.data.results[0].geometry &&
@@ -84,10 +87,10 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               tripUid,
               invitedUserUid,
               createdAt: new Date(),
-              createdByUid: trip.createdByUid,
+              createdByUid: trip.createdByUid
             };
             return db.collection("requests").add(request);
-          }),
+          })
         ]);
 
         handleClose(true);
@@ -101,17 +104,17 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
   const handleChange = React.useCallback(
     ({ target: { value, name, checked } }) => {
       if (name === "participants") {
-        setTrip((o) => {
+        setTrip(o => {
           let { participants } = o;
           if (checked) participants.push(value);
-          else participants = participants.filter((itm) => itm !== value);
+          else participants = participants.filter(itm => itm !== value);
           return { ...o, participants };
         });
       } else if (name === "startingpoint") {
-        setTrip((o) => ({ ...o, startingPoint: value }));
+        setTrip(o => ({ ...o, startingPoint: value }));
       } else if (name === "endingpoint") {
-        setTrip((o) => ({ ...o, endingPoint: value }));
-      } else setTrip((o) => ({ ...o, [name]: value }));
+        setTrip(o => ({ ...o, endingPoint: value }));
+      } else setTrip(o => ({ ...o, [name]: value }));
     },
     []
   );
@@ -129,18 +132,34 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
     stops[index] = value;
     setTrip({
       ...trip,
-      stopPoints: stops,
+      stopPoints: stops
     });
   };
 
   // handle click event of the Remove button
-  const handleRemoveStop = (index) => {
+  const handleRemoveStop = index => {
     const stops = [...trip.stopPoints];
     stops.splice(index, 1);
     setTrip({
       ...trip,
-      stopPoints: stops,
+      stopPoints: stops
     });
+  };
+
+  const handleBlur = async e => {
+    const res = await makeGetRequest(e.target.value);
+    if (
+      res &&
+      res.data &&
+      res.data.results[0].geometry &&
+      res.data.results[0].geometry.location
+    ) {
+      const latLang = res.data.results[0].geometry.location;
+      setCoords({
+        ...coords,
+        [e.target.name]: { placeName: e.target.value, location: latLang }
+      });
+    }
   };
 
   return (
@@ -152,67 +171,84 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="name" className={classNames.formLabel}>
-              Name
+              Trip Name
             </Label>
             <Input
               type="text"
               name="name"
               id="name"
-              placeholder="Name a trip"
+              placeholder="Sam's evening jog to Trillium park"
               value={trip.name}
               onChange={handleChange}
             />
           </FormGroup>
           <FormGroup>
-            <Label for="starting-point">Starting Point</Label>
+            <Label for="starting-point" className={classNames.formLabel}>
+              Starting Location
+            </Label>
             <Input
               type="text"
               name="startingpoint"
               id="starting-point"
               onChange={handleChange}
-              placeholder="Starting point"
+              onBlur={handleBlur}
+              placeholder="CityPlace - Downtown"
             />
           </FormGroup>
           <FormGroup>
-            <Label for="starting-point">Ending Point</Label>
+            <Label for="starting-point" className={classNames.formLabel}>
+              Ending Location
+            </Label>
             <Input
               type="text"
               name="endingpoint"
               id="ending-point"
               onChange={handleChange}
-              placeholder="Ending point"
+              onBlur={handleBlur}
+              placeholder="Trillium Park"
             />
           </FormGroup>
           <FormGroup>
-            <Label>Add Stops</Label> &nbsp;
             <Button color="success" onClick={handleAddClick}>
-              +
+              Add Stops
             </Button>
           </FormGroup>
 
           {trip.stopPoints.map((stop, i) => (
             <>
               <FormGroup>
-                <Label for={`stopPoint${i + 1}`}>Stop Point {i}</Label>
-                <Input
-                  type="text"
-                  name={`stopPoint${i}`}
-                  id="ending-point"
-                  onChange={(e) => handleStopChange(e, i)}
-                  value={stop}
-                  placeholder={`Stop point ${i + 1}`}
-                />
+                {/*<Label for={`stopPoint${i + 1}`}>Stop Point {i}</Label>*/}
+                <Label
+                  for={`stopPoint${i + 1}`}
+                  className={classNames.formLabel}
+                >
+                  I'll be passing:{" "}
+                </Label>
+                <Media>
+                  <Media body>
+                    <Input
+                      type="text"
+                      name={`stopPoint${i}`}
+                      id="ending-point"
+                      onChange={e => handleStopChange(e, i)}
+                      value={stop}
+                      placeholder={`Stop point ${i + 1}`}
+                      onBlur={handleBlur}
+                    />
+                  </Media>
+                  <Media right>
+                    {trip.stopPoints.length > 0 && (
+                      <IoIosRemoveCircleOutline
+                        className={classNames.stopRemoveIcon}
+                        onClick={() => handleRemoveStop(i)}
+                      />
+                    )}
+                  </Media>
+                </Media>
               </FormGroup>
-              <div className="btn-box">
-                {trip.stopPoints.length > 0 && (
-                  <Button color="danger" onClick={() => handleRemoveStop(i)}>
-                    -
-                  </Button>
-                )}
-              </div>
             </>
           ))}
-          <ParticipantsField handleChange={handleChange} />
+          <ParticipantsField coords={coords} handleChange={handleChange} />
         </Form>
       </ModalBody>
       <ModalFooter>
