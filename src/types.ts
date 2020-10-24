@@ -28,6 +28,7 @@ export interface Trip {
 export type RequestStatus = "pending" | "accepted" | "rejected";
 
 export interface Request {
+  invitedUserUid: string;
   status: RequestStatus;
   tripUid: string;
   createdByUid: string;
