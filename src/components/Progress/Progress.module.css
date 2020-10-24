@@ -1,0 +1,6 @@
+.progress {
+  margin: 12px 0;
+  height: 20px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
