@@ -2,6 +2,7 @@ import React, { memo, useCallback } from "react";
 import { Container, Nav, TabContent, TabPane } from "reactstrap";
 
 import EditTrip from "./EditTrip";
+import RequestList from "./RequestList";
 import TabNavItem from "./TabNavItem";
 import classNames from "./Trip.module.css";
 import TripList from "./TripList";
@@ -73,7 +74,7 @@ const Trip: React.FC<TripProps> = () => {
           />
         </TabPane>
         <TabPane tabId="requested">
-          <h4>Tab2 contents</h4>
+          <RequestList handleRequestUpdate={upcoming.updateTrips} />
         </TabPane>
         <TabPane tabId="finished">
           <TripList

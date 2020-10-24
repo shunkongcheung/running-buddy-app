@@ -7,7 +7,7 @@ import { FaRunning } from "react-icons/fa";
 
 import classNames from "./TripList.module.css";
 
-import { LineButton, Progress } from "../../components";
+import { LineButton, PlaceHolder, Progress } from "../../components";
 import { Trip } from "../../types";
 
 interface TripItem extends Trip {
@@ -71,6 +71,7 @@ const TripList: React.FC<TripListProps> = ({
           </ListGroupItem>
         ))}
       </ListGroup>
+      {!trips.length && <PlaceHolder>Lets plan a trip</PlaceHolder>}
     </div>
   );
 };

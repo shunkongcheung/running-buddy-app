@@ -25,11 +25,11 @@ export interface Trip {
   createdAt: Date;
 }
 
-export type RequestStatus = "pending" | "accepted" | "rejected";
+export type InviteRequestStatus = "pending" | "accepted" | "rejected";
 
-export interface Request {
+export interface InviteRequest {
   invitedUserUid: string;
-  status: RequestStatus;
+  status: InviteRequestStatus;
   tripUid: string;
   createdByUid: string;
 }
