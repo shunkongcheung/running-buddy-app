@@ -13,24 +13,18 @@ import {
   ModalFooter,
 } from "reactstrap";
 
-interface BuddyProfile {
-  uid: string;
-  displayName: string;
-  email: string;
-}
-
-interface Buddy {
-  ownerUid: string;
-  meetings: Array<any>;
-  buddyProfile: BuddyProfile;
-}
+import { Buddy, RegisteredUser } from "../../types";
 
 interface AddBuddyModalProps {
   handleClose: (refresh?: boolean) => any;
   isOpen: boolean;
 }
 
-const getBuddyProfile = async (email: string) => {
+interface BuddyProfile extends RegisteredUser {
+  uid: string;
+}
+
+const getBuddyProfile = async (email: string): Promise<BuddyProfile> => {
   // find by email
   const db = firebase.firestore();
   const docRef = await db
@@ -38,33 +32,21 @@ const getBuddyProfile = async (email: string) => {
     .where("email", "==", email)
     .get();
 
-  if (docRef.size !== 1) throw Error("Data not found");
+  if (docRef.size !== 1) throw Error("User not found");
 
-  let buddyProfile: BuddyProfile = {
-    uid: "",
-    displayName: "",
-    email: "",
-  };
-
-  // only one item
-  docRef.forEach((item) => {
-    const id = item.id;
-    const data = item.data();
-
-    // cant add self
-    buddyProfile.displayName = data.displayName;
-    buddyProfile.uid = id;
-    buddyProfile.email = data.email;
+  return new Promise((resolve) => {
+    docRef.forEach((itm) =>
+      resolve({ ...itm.data(), uid: itm.id } as BuddyProfile)
+    );
   });
-  return buddyProfile;
 };
 
-const validateBuddyExist = async (ownerUid: string, buddyUid: string) => {
+const validateBuddyNotExist = async (ownerUid: string, buddyUid: string) => {
   const db = firebase.firestore();
   const docRef = await db
     .collection("buddies")
     .where("ownerUid", "==", ownerUid)
-    .where("buddyProfile.uid", "==", buddyUid)
+    .where("buddyUid", "==", buddyUid)
     .get();
 
   if (!docRef.empty) throw Error("Buddy already exists!");
@@ -89,12 +71,14 @@ const AddBuddyModal: React.FC<AddBuddyModalProps> = ({
       const { uid } = firebase.auth().currentUser;
       try {
         const buddyProfile = await getBuddyProfile(email);
-        if (buddyProfile.uid === uid)
-          throw Error("Cannot register yourself as buddy :(");
 
-        await validateBuddyExist(uid, buddyProfile.uid);
+        await validateBuddyNotExist(uid, buddyProfile.uid);
 
-        await storeBuddy({ ownerUid: uid, meetings: [], buddyProfile });
+        await storeBuddy({
+          ownerUid: uid,
+          meetings: [],
+          buddyUid: buddyProfile.uid,
+        });
         handleClose(true);
       } catch (err) {
         console.error(err);
