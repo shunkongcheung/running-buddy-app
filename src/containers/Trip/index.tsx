@@ -23,7 +23,7 @@ const Trip: React.FC<TripProps> = () => {
   const [activeTab, setActiveTab] = React.useState<TabName>(
     (query?.tab as any) || "upcoming"
   );
-  const upcoming = useTripListState(false);
+  const upcoming = useTripListState();
 
   const handleClose = useCallback(
     (isRefresh) => {
