@@ -21,7 +21,9 @@ const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
   return (
     <>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">RUNNING BUDDY</NavbarBrand>
+        <Link href="/">
+          <NavbarBrand href="/">RUNNING BUDDY</NavbarBrand>
+        </Link>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
