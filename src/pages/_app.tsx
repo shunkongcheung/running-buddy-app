@@ -2,11 +2,12 @@ import type { AppProps /*, AppContext */ } from "next/app";
 import Head from "next/head";
 import firebase from "firebase/app";
 import { FirebaseAuthProvider } from "@react-firebase/auth";
-import "firebase/auth";
 
 import { UserContext, useUserProvider } from "../contexts/userContext";
 import Layout from "../containers/Layout";
 
+import "firebase/auth";
+import "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const config = {
