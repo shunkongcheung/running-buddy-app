@@ -12,12 +12,13 @@ export interface Buddy {
   buddyUid: string;
 }
 
+export type TripStatus = "created" | "started" | "finished";
+
 export interface Trip {
   name: string;
   // path: any; // TODO: not decided yet
   startAt: Date;
-
-  isFinished: boolean;
+  status: TripStatus;
 
   participants: Array<string>;
   createdByUid: string;
