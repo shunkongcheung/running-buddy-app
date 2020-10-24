@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 import { useRouter } from "next/router";
 import firebase from "firebase";
-import { Button, Container, ListGroup, ListGroupItem } from "reactstrap";
+import { Container, ListGroup, ListGroupItem, Media } from "reactstrap";
 
 import AddBuddyModal from "./AddBuddyModal";
 import classNames from "./Buddy.module.css";
 
-import { LineButton} from '../../components'
+import { LineButton } from "../../components";
 import { Buddy as DataBuddy, RegisteredUser } from "../../types";
 import { getDistanceBetweenCoords, getUserCoord } from "../../utils";
 
@@ -119,7 +119,7 @@ const Buddy: React.FC<BuddyProps> = () => {
       <div className={classNames.heading}>
         <h3>Buddies</h3>
         <LineButton
-					lineColor="dodgerblue"
+          lineColor="dodgerblue"
           onClick={() => setIsOpenAddBuddy(true)}
         >
           Add Buddy
@@ -140,22 +140,19 @@ const Buddy: React.FC<BuddyProps> = () => {
               },
               idx
             ) => (
-              <ListGroupItem
-                key={`Buddy-${displayName}-${idx}-${buddyId}`}
-                className={classNames.listItem}
-              >
-                <div className="media">
-                  <div className="media-left">
-                    <img src="/user.png" className="media-object" width={60} />
-                  </div>
-                  <div className="media-body">
+              <ListGroupItem key={`Buddy-${displayName}-${idx}-${buddyId}`}>
+                <Media>
+                  <Media left>
+                    <Media object src="/user.png" width={60} />
+                  </Media>
+                  <Media body>
                     <h5 className="media-heading">{displayName}</h5>
                     <h6>{email}</h6>
-                    <div>
+                    <Media>
                       <small>
                         Last Logged in at: {lastLoggedInAt.toLocaleString()}
                       </small>
-                    </div>
+                    </Media>
                     {userCoord.latitude !== null &&
                       userCoord.longitude !== null && (
                         <div>
@@ -169,16 +166,16 @@ const Buddy: React.FC<BuddyProps> = () => {
                           </small>
                         </div>
                       )}
-                  </div>
-                  <div className="media-right">
+                  </Media>
+                  <Media right>
                     <LineButton
-											lineColor="#ef3648"
+                      lineColor="#ef3648"
                       onClick={() => unlinkBuddy(buddyId)}
                     >
                       Unlink
                     </LineButton>
-                  </div>
-                </div>
+                  </Media>
+                </Media>
               </ListGroupItem>
             )
           )}
