@@ -8,6 +8,8 @@
 
 .avatar {
     border-radius: 50%;
+    width: 60px;
+    height: 60px;
 }
 
 .mediaLeft {
@@ -16,5 +18,13 @@
 
 .emailH6 {
     font-size: 12px;
+    color: #777777;
+}
+
+.distanceLabel {
+    color: #777777;
+}
+
+.loggedInLabel {
     color: #777777;
 }

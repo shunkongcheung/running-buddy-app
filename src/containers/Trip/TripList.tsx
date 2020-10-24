@@ -3,8 +3,6 @@ import Link from "next/link";
 
 import { ListGroup, ListGroupItem, Media } from "reactstrap";
 
-import { FaRunning } from "react-icons/fa";
-
 import classNames from "./TripList.module.css";
 
 import { PlaceHolder, Progress } from "../../components";
@@ -26,21 +24,25 @@ const TripList: React.FC<TripListProps> = ({ loading, trips }) => {
     <div className={classNames.container}>
       <Progress loading={loading} />
       <ListGroup>
-        {trips.map(({ uid, name, participants, createdAt, startAt }) => (
+        {trips.map(({ uid, name, participants, createdAt, rounds }) => (
           <Link href={`/trip/${uid}`} key={`TripListItem-${uid}`}>
             <ListGroupItem>
               <Media>
-                <Media left>
-                  <FaRunning className={classNames.runningIcon} />
+                <Media className={classNames.mediaLeft} left>
+                  {/*<FaRunning className={classNames.runningIcon} />*/}
+                  <Media className={classNames.avatar} object src="/trip.png" />
                 </Media>
                 <Media body>
-                  <h3>{name}</h3>
-                  <p>
-                    Your trip is scheduled at {startAt.toLocaleString()}
-                    <br />
+                  <h5>{name}</h5>
+                  <h6 className={classNames.emailH6}>
                     There are {participants.length} confirmed your request.
-                  </p>
-                  <small>Created at {createdAt.toLocaleString()}</small>
+                  </h6>
+                  <h6 className={classNames.emailH6}>
+                    Created at {createdAt.toLocaleString()}
+                  </h6>
+                  <h6 className={classNames.emailH6}>
+                    Number of trip rounds: {rounds.length}
+                  </h6>
                 </Media>
               </Media>
             </ListGroupItem>

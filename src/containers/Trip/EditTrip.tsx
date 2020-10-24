@@ -42,7 +42,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
     coordinates: []
   });
 
-  const [coords,setCoords]= React.useState({});
+  const [coords, setCoords] = React.useState({});
 
   const makeGetRequest = async address => {
     return axios.get(
@@ -146,27 +146,21 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
     });
   };
 
-  const handleBlur= async (e)=>{
-
-    const res= await makeGetRequest(e.target.value);
-    console.log("res",res)
-    console.log("v",e.target.value)
+  const handleBlur = async e => {
+    const res = await makeGetRequest(e.target.value);
     if (
-        res && res.data &&
-        res.data.results[0].geometry &&
-        res.data.results[0].geometry.location
-      ) {
-        
-        const latLang= res.data.results[0].geometry.location;
-        setCoords({
-          ...coords,
-          [e.target.name]:{placeName:e.target.value, location:latLang}
-        })
-      }
-
-       
-  }
-
+      res &&
+      res.data &&
+      res.data.results[0].geometry &&
+      res.data.results[0].geometry.location
+    ) {
+      const latLang = res.data.results[0].geometry.location;
+      setCoords({
+        ...coords,
+        [e.target.name]: { placeName: e.target.value, location: latLang }
+      });
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} toggle={() => handleClose()}>
@@ -254,7 +248,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               </FormGroup>
             </>
           ))}
-          <ParticipantsField coords={coords}  handleChange={handleChange} />
+          <ParticipantsField coords={coords} handleChange={handleChange} />
         </Form>
       </ModalBody>
       <ModalFooter>
