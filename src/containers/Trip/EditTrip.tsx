@@ -51,6 +51,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               tripUid,
               invitedUserUid,
               createdByUid: trip.createdByUid,
+              createdAt: new Date(),
             };
             return db.collection("requests").add(request);
           }),
