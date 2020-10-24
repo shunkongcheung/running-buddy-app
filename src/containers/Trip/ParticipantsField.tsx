@@ -119,7 +119,7 @@ const ParticipantsField: React.FC<ParticipantsFieldProps> = ({
                   onChange={handleChange}
                 />
                 <div class="chip" className={classNames.chip}>
-                  <img src={photoURL} alt="Person" width="96" height="96" />
+                  <img src={photoURL} alt={displayName} width="96" height="96" />
                   {displayName}
                   {distance && <b> - {Math.round(distance)} km</b>}
                   {placeName && <span>({placeName})</span>}
