@@ -51,40 +51,47 @@ const Trip: React.FC<TripProps> = () => {
   return (
       <>
         {/*<img className={classNames.background} src="/app-background.jpg"/>*/}
-        <Container>
+        <Container className={classNames.well}>
           <EditTrip handleClose={handleClose} isOpen={isOpen}/>
-          <Container className={classNames.heading}>
-            <h2>Manage Trips</h2>
-            <LineButton color="primary" onClick={() => setIsOpen(true)}>
-              Create Trip
-            </LineButton>
-          </Container>
-          <Nav pills justified>
-            <TabNavItem
-                activeName={activeTab}
-                tabName="upcoming"
-                label="My Trips"
-                handleClick={handleTabChange}
-            />
-            <TabNavItem
-                activeName={activeTab}
-                tabName="requested"
-                label="Trip Requests"
-                handleClick={handleTabChange}
-            />
-          </Nav>
-          <TabContent activeTab={activeTab}>
-            <TabPane tabId="upcoming">
-              <TripList
-                  isFinished={false}
-                  loading={upcoming.loading}
-                  trips={upcoming.trips}
+
+          <div className={classNames.headerDiv}>
+            <Container className={classNames.heading}>
+              <h5>Manage my trips</h5>
+              <LineButton className={classNames.lineButton} onClick={() => setIsOpen(true)}>
+                Create Trip
+              </LineButton>
+            </Container>
+          </div>
+
+          <div className={classNames.navContainerDiv}>
+            <Nav pills justified>
+              <TabNavItem
+                  activeName={activeTab}
+                  tabName="upcoming"
+                  label="My Trips"
+                  handleClick={handleTabChange}
               />
-            </TabPane>
-            <TabPane tabId="requested">
-              <RequestList handleRequestUpdate={upcoming.updateTrips}/>
-            </TabPane>
-          </TabContent>
+              <TabNavItem
+                  activeName={activeTab}
+                  tabName="requested"
+                  label="Trip Requests"
+                  handleClick={handleTabChange}
+              />
+            </Nav>
+            <TabContent activeTab={activeTab}>
+              <TabPane tabId="upcoming">
+                <TripList
+                    isFinished={false}
+                    loading={upcoming.loading}
+                    trips={upcoming.trips}
+                />
+              </TabPane>
+              <TabPane tabId="requested">
+                <RequestList handleRequestUpdate={upcoming.updateTrips}/>
+              </TabPane>
+            </TabContent>
+          </div>
+
         </Container>
       </>
   );
