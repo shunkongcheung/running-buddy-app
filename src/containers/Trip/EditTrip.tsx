@@ -168,6 +168,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
                   name="name"
                   id="name"
                   onChange={handleChange}
+                  placeholder="Sam's evening jog to Trillium Park"
               />
             </FormGroup>
 
