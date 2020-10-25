@@ -1,22 +1,15 @@
-import React, { memo } from "react";
-import { useRouter } from "next/router";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
-  Container,
-  Spinner,
-} from "reactstrap";
+import React, {memo} from "react";
+import {useRouter} from "next/router";
+import {Button, Card, CardBody, CardText, CardTitle, Container, Spinner,} from "reactstrap";
 import firebase from "firebase/app";
 
 import classNames from "./Login.module.css";
 
-import { RegisteredUser } from "../../types";
-import { getUserCoord } from "../../utils";
+import {RegisteredUser} from "../../types";
+import {getUserCoord} from "../../utils";
 
-interface LoginProps {}
+interface LoginProps {
+}
 
 const Login: React.FC<LoginProps> = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -26,12 +19,12 @@ const Login: React.FC<LoginProps> = () => {
     // login user
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
     const {
-      user: { uid, displayName, email, photoURL },
+      user: {uid, displayName, email, photoURL},
     } = await firebase.auth().signInWithPopup(googleAuthProvider);
 
     // get user current location
     const {
-      coords: { latitude, longitude },
+      coords: {latitude, longitude},
     } = await getUserCoord();
 
     setIsLoading(true);
@@ -49,35 +42,35 @@ const Login: React.FC<LoginProps> = () => {
     db.collection("registered-users").doc(uid).set(user);
 
     // redirect and store token
-    const { goTo } = router.query;
+    const {goTo} = router.query;
     router.push((goTo as string) || "/trip");
   }, [router]);
 
   return (
-    <>
-      {/*<img className={classNames.background} src="/login-background.jpg" />*/}
-      <div className={classNames.background}>
-        <Container>
-          <Card className={classNames.card}>
-            <img className={classNames.appIcon} src="/icon.png" />
-            <CardBody className={classNames.cardBody}>
-              <CardTitle>
-                <h2>Running Buddy</h2>
-              </CardTitle>
-              <CardText>Because you always need a buddy</CardText>
-              <Button className={classNames.button} onClick={handleLogin}>
-                {isLoading ? (
-                  <Spinner color="danger" />
-                ) : (
-                  <img src="/google-icon-white.png" width="30" />
-                )}
-                <div className={classNames.loginTxt}>Login with Google</div>
-              </Button>
-            </CardBody>
-          </Card>
-        </Container>
-      </div>
-    </>
+      <>
+        {/*<img className={classNames.background} src="/login-background.jpg" />*/}
+        <div className={classNames.background}>
+          <Container>
+            <Card className={classNames.card}>
+              <img className={classNames.appIcon} src="/icon.png"/>
+              <CardBody className={classNames.cardBody}>
+                <CardTitle>
+                  <h2>Running Buddy</h2>
+                </CardTitle>
+                <CardText>Because you always need a buddy</CardText>
+                <Button className={classNames.button} onClick={handleLogin}>
+                  {isLoading ? (
+                      <Spinner color="danger"/>
+                  ) : (
+                      <img src="/google-icon-white.png" width="30"/>
+                  )}
+                  <div className={classNames.loginTxt}>Login with Google</div>
+                </Button>
+              </CardBody>
+            </Card>
+          </Container>
+        </div>
+      </>
   );
 };
 
