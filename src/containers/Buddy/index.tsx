@@ -1,15 +1,16 @@
-import React, { memo } from "react";
-import { Container } from "reactstrap";
+import React, {memo} from "react";
+import {Container} from "reactstrap";
 
 import classNames from "./Buddy.module.css";
 import AddBuddyModal from "./AddBuddyModal";
 
-import { LineButton } from "../../components";
+import {LineButton} from "../../components";
 
 import BuddyList from "./BuddyList";
 import useBuddyListState from "./useBuddyListState";
 
-interface BuddyProps {}
+interface BuddyProps {
+}
 
 const Buddy: React.FC<BuddyProps> = () => {
   const [isOpenAddBuddy, setIsOpenAddBuddy] = React.useState(false);
@@ -22,21 +23,23 @@ const Buddy: React.FC<BuddyProps> = () => {
   }, []);
 
   return (
-    <Container>
-      <AddBuddyModal
-        isOpen={isOpenAddBuddy}
-        handleClose={handleAddBuddyClose}
-      />
-      <Container className={classNames.heading}>
-        <h3>Buddies</h3>
-        <div>
-          <LineButton onClick={() => setIsOpenAddBuddy(true)}>
-            Add Buddy
-          </LineButton>
+      <Container className={classNames.well}>
+        <AddBuddyModal isOpen={isOpenAddBuddy} handleClose={handleAddBuddyClose}/>
+
+        <div className={classNames.headerDiv}>
+
+          <Container className={classNames.heading}>
+            <h5>My Buddies</h5>
+            <LineButton
+                className={classNames.lineButton}
+                onClick={() => setIsOpenAddBuddy(true)}>
+              Add a Buddy
+            </LineButton>
+          </Container>
         </div>
+
+        <BuddyList buddies={buddies} updateBuddies={updateBuddies}/>
       </Container>
-      <BuddyList buddies={buddies} updateBuddies={updateBuddies} />
-    </Container>
   );
 };
 

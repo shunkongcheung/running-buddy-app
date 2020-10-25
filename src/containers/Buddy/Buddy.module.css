@@ -1,4 +1,50 @@
 .heading {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+}
+
+.background {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f7f7f7;
+    /*background-repeat: repeat;*/
+}
+
+.lineButton {
+    float: right;
+}
+
+.lineButton::before {
+    background: #ffffff;
+    color: #1860bf;
+    border: solid #1860bf;
+}
+
+.lineButton::after {
+    background: #ffffff;
+    color: #1860bf;
+    border: solid #1860bf;
+}
+
+.well {
+    /*background: #eeeeee;*/
+    border-radius: 5px;
+    padding: 15px;
+    /*margin: 5px auto;*/
+    /*width: 80%;*/
+    height: 100%;
+}
+
+.headerDiv {
+    margin: 0 0 10px 0;
+    /*background: #eeeeee;*/
+    /*padding: 10px;*/
+    color: #333333;
+}
+
+.navContainerDiv {
+    /*margin: 5px 20px;*/
 }
