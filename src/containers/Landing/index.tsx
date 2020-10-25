@@ -1,42 +1,29 @@
-import React, { memo } from "react";
+import React, {memo} from "react";
 import Link from "next/link";
-import {
-  Button,
-  Col,
-  Container,
-  Fade,
-  Form,
-  FormGroup,
-  Input,
-  Row,
-} from "reactstrap";
+import {Button, Col, Container, Fade, Form, FormGroup, Input, Row,} from "reactstrap";
 
-import { BsDropletHalf } from "react-icons/bs";
-import { BiRun } from "react-icons/bi";
+import {BsDropletHalf} from "react-icons/bs";
+import {BiRun} from "react-icons/bi";
 
 import classNames from "./Landing.module.css";
-import {
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillTwitterSquare,
-} from "react-icons/ai";
+import {AiFillFacebook, AiFillInstagram, AiFillTwitterSquare,} from "react-icons/ai";
 
 const Landing: React.FC = () => {
   return (
-    <>
-      <div className={classNames.headingContainer}>
-        <Fade mountOnEnter>
-          <div className={classNames.heading}>RUNNING FOR YOUR COMMUNITY</div>
-        </Fade>
-      </div>
-      <Row>
-        <Col xs={12} md={6}>
-          <Container className={classNames.contentContainer}>
-            <div className={classNames.contentTitle}>
-              <BiRun fontSize={32} className={classNames.contentIcon} />
-              <h3 className={classNames.titleH3Txt}>Run with a friend</h3>
-            </div>
-            <p>
+      <>
+        <div className={classNames.headingContainer}>
+          <Fade mountOnEnter>
+            <div className={classNames.heading}>YOU WILL NEVER RUN ALONE AGAIN...</div>
+          </Fade>
+        </div>
+        <Row>
+          <Col xs={12} md={6}>
+            <Container className={classNames.contentContainer}>
+              <div className={classNames.contentTitle}>
+                <BiRun fontSize={32} className={classNames.contentIcon}/>
+                <h3 className={classNames.titleH3Txt}>Run with a friend</h3>
+              </div>
+              <p>
               It's a proven fact that getting enough daily exercise will improve
               your physical and mental health conditions and running or jogging
               is a really good way to get the exercise your body needs. But
