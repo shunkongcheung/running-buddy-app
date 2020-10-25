@@ -15,9 +15,11 @@ const RoundItem: React.FC<Round> = ({
   const durationStr = useMemo(() => {
     const hours = Math.floor(totalSecond / 3600);
     const minutes = Math.floor(totalSecond / 60 - hours * 60);
+    const remainSec = totalSecond - hours * 3600 - minutes * 60;
     let durationStr = "";
     if (hours) durationStr += `${hours} hour(s) `;
     if (minutes) durationStr += `${minutes} minutes(s) `;
+    if (!durationStr) durationStr = `${remainSec} seconds(s)`;
 
     return durationStr.trim();
   }, []);
