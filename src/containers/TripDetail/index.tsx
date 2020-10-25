@@ -24,6 +24,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
   const tripDetail = useTripDetailState();
 
   const {
+    name,
     participants,
     rounds,
     coordinates,
@@ -53,7 +54,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
           </CardTitle>
           <CardText>
             <p>
-              {participants.length && (
+              {!!participants.length && (
                 <>
                   <br />
                   {participants.map((user) => user.displayName).join(",")} will
@@ -61,6 +62,15 @@ const TripDetail: React.FC<TripDetailProps> = () => {
                 </>
               )}
             </p>
+            <p>
+              Location: {startingPoint} {"=>"} {endingPoint}
+            </p>
+            {/*stopPoints && Boolean(stopPoints.length) && (
+              <p>Stops: {stopPoints.join(",")}</p>
+							) */}
+
+            <small>Created at {createdAt.toLocaleString()}</small>
+
             <Map
               googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.googleAPIKey}`}
               loadingElement={<div style={{ height: `100%` }} />}
@@ -70,14 +80,6 @@ const TripDetail: React.FC<TripDetailProps> = () => {
               mapElement={<div style={{ height: `100%` }} />}
               coordinates={coordinates}
             />
-            <p>
-              Location: {startingPoint} {"=>"} {endingPoint}
-            </p>
-            {/*stopPoints && Boolean(stopPoints.length) && (
-              <p>Stops: {stopPoints.join(",")}</p>
-							) */}
-
-            <small>Created at {createdAt.toLocaleString()}</small>
           </CardText>
           {createdByUid === userId && (
             <div className={classNames.btnContainer}>
