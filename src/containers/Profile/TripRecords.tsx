@@ -1,12 +1,12 @@
-import React, { memo } from "react";
+import React, {memo} from "react";
 import firebase from "firebase/app";
-import { ListGroup, ListGroupItem, Media } from "reactstrap";
+import {ListGroup, ListGroupItem, Media} from "reactstrap";
 
-import { Trip } from "../../types";
+import {Trip} from "../../types";
 
 import classNames from "./TripRecords.module.css";
 
-import { PlaceHolder } from "../../components";
+import {PlaceHolder} from "../../components";
 
 interface TripItem extends Trip {
   uid: string;
@@ -73,8 +73,8 @@ const TripRecords: React.FC = () => {
                 </h6>
                 <h6 className={classNames.emailH6}>
                   {participantCount > 1
-                    ? `There were ${participantCount} of you running together!`
-                    : "You went on this trip as a solo hero!"}
+                      ? `${participantCount} buddies joined you on this trip`
+                      : "You went on this trip as a solo hero"}
                 </h6>
               </Media>
             </Media>
