@@ -2,8 +2,9 @@ import React, { memo, ReactNode } from "react";
 import { useRouter } from "next/router";
 import firebase from "firebase/app";
 
-import RequestAlert from "./RequestAlert";
+import MobileNavBar from "./MobileNavBar";
 import NavBar from "./NavBar";
+import RequestAlert from "./RequestAlert";
 
 interface LayoutProps {
   children: ReactNode;
@@ -46,6 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <NavBar displayName={displayName} />
       <RequestAlert />
       {children}
+      <MobileNavBar />
     </main>
   );
 };

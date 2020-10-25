@@ -35,7 +35,7 @@ const NavBar: React.FC<NavBarProps> = ({ displayName }) => {
             />
           </Link>
         </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
+        <NavbarToggler onClick={toggle} className={classNames.collapse} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             {!!displayName && (
