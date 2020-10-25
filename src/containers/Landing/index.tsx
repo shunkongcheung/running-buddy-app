@@ -90,7 +90,7 @@ const Landing: React.FC = () => {
                 fontSize={32}
                 className={classNames.contentIcon}
               />
-              <h3>Run with a friend</h3>
+              <h3>View your Performance</h3>
             </div>
             <p>
               It is a long established fact that a reader will be distracted by
@@ -104,7 +104,7 @@ const Landing: React.FC = () => {
             <Link href="/login">
               <Button color="secondary">
                 <BsFillShieldLockFill className={classNames.btnIcon} />
-                Join Us
+                See your Profile
               </Button>
             </Link>
           </Container>
@@ -113,7 +113,7 @@ const Landing: React.FC = () => {
           <Container className={classNames.contentContainer}>
             <div className={classNames.contentTitle}>
               <BsDropletHalf fontSize={32} className={classNames.contentIcon} />
-              <h3>Schedule a Run</h3>
+              <h3>Add a Friend</h3>
             </div>
             <p>
               It is a long established fact that a reader will be distracted by
@@ -124,10 +124,10 @@ const Landing: React.FC = () => {
               publishing packages and web page editors now use Lorem Ipsum as
               their default model text, and a search for
             </p>
-            <Link href="/trip">
+            <Link href="/buddy">
               <Button color="primary">
                 <BsFillClockFill className={classNames.btnIcon} />
-                Make a Schedule
+                Add Buddy
               </Button>
             </Link>
           </Container>
