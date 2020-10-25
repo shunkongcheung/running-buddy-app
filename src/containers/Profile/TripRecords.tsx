@@ -72,7 +72,7 @@ const TripRecords: React.FC = () => {
                   You went on this trip for {trip.rounds.length} time(s)
                 </h6>
                 <h6 className={classNames.emailH6}>
-                  {participantCount.length > 1
+                  {participantCount > 1
                     ? `There were ${participantCount} of you running together!`
                     : "You went on this trip as a solo hero!"}
                 </h6>
