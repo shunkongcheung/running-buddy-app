@@ -1,11 +1,11 @@
-import React, { memo, useRef, useEffect } from "react";
+import React, { useRef } from "react";
 
 import {
   withGoogleMap,
   withScriptjs,
   GoogleMap,
   Marker,
-  Polyline
+  Polyline,
 } from "react-google-maps";
 
 interface Coords {
@@ -20,68 +20,68 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({ coordinates }) => {
   const map = useRef();
 
-  const midPoint = (trackingLocation, deliveryLocation) => {
+  const midPoint = (trackingLocation: any, deliveryLocation: any) => {
     if (deliveryLocation) {
       return [
         trackingLocation.lat +
           (deliveryLocation.lat - trackingLocation.lat) * 0.5,
         trackingLocation.lng +
-          (deliveryLocation.lng - trackingLocation.lng) * 0.5
+          (deliveryLocation.lng - trackingLocation.lng) * 0.5,
       ];
     } else {
       return trackingLocation;
     }
   };
 
-  let iconMarker = new window.google.maps.MarkerImage(
+  let iconMarker = new (window as any).google.maps.MarkerImage(
     "https://img.favpng.com/6/7/4/computer-icons-google-map-maker-clip-art-png-favpng-Wgm1Jhqup5qqDE6CdZAK9yJdY.jpg",
     null /* size is determined at runtime */,
     null /* origin is 0,0 */,
     null /* anchor is bottom center of the scaled image */,
-    new window.google.maps.Size(32, 32)
+    new (window as any).google.maps.Size(32, 32)
   );
 
   const getMinAndMaxBounds = () => {
     const minLat = Math.min.apply(
       null,
-      coordinates.map(coords => coords.lat)
+      coordinates.map((coords) => coords.lat)
     );
     const minLang = Math.min.apply(
       null,
-      coordinates.map(item => item.lng)
+      coordinates.map((item) => item.lng)
     );
     const maxLat = Math.max.apply(
       null,
-      coordinates.map(coords => coords.lat)
+      coordinates.map((coords) => coords.lat)
     );
     const maxLang = Math.max.apply(
       null,
-      coordinates.map(item => item.lng)
+      coordinates.map((item) => item.lng)
     );
     return {
       minCords: {
         lat: minLat,
-        lng: minLang
+        lng: minLang,
       },
       maxCords: {
         lat: maxLat,
-        lng: maxLang
-      }
+        lng: maxLang,
+      },
     };
   };
   const { minCords, maxCords } = getMinAndMaxBounds();
   const centerPoint = midPoint(minCords, maxCords);
 
-  const bounds = new window.google.maps.LatLngBounds();
-  coordinates.map((cord, i) => {
-    bounds.extend(new window.google.maps.LatLng(cord.lat, cord.lng));
+  const bounds = new (window as any).google.maps.LatLngBounds();
+  coordinates.map((cord) => {
+    bounds.extend(new (window as any).google.maps.LatLng(cord.lat, cord.lng));
   });
 
   React.useEffect(() => {
     if (map && map.current) {
-      map.current.fitBounds(bounds);
+      (map as any).current.fitBounds(bounds);
     }
-  });
+  }, []);
 
   return (
     <>
