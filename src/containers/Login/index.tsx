@@ -48,16 +48,16 @@ const Login: React.FC<LoginProps> = () => {
 
   return (
       <>
-        {/*<img className={classNames.background} src="/login-background.jpg" />*/}
+        <img className={classNames.background} src="/login-background.jpg"/>
         <div className={classNames.background}>
           <Container>
             <Card className={classNames.card}>
               <img className={classNames.appIcon} src="/icon.png"/>
               <CardBody className={classNames.cardBody}>
                 <CardTitle>
-                  <h2>Running Buddy</h2>
+                  <h3 className={classNames.titleText}>Running Buddy</h3>
                 </CardTitle>
-                <CardText>Because you always need a buddy</CardText>
+                <CardText className={classNames.subText}><i>"You will never run alone again..."</i></CardText>
                 <Button className={classNames.button} onClick={handleLogin}>
                   {isLoading ? (
                       <Spinner color="danger"/>
