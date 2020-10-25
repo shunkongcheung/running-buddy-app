@@ -1,25 +1,43 @@
 .col {
-  margin: 15px 0;
-  max-height: 70vh;
-  overflow: auto;
+    margin: 15px 0;
+    max-height: 90vh;
+    overflow: auto;
 }
 
 .spnnerContainer {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .reverseRow {
-  display: flex;
-  flex-direction: column-reverse;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 @media (min-width: 768px) {
-  .reverseRow {
-    display: flex;
-    flex-direction: row;
-  }
+    .reverseRow {
+        display: flex;
+        flex-direction: row;
+    }
 }
+
+.wellContainer {
+    /*background: #eeeeee;*/
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px auto;
+    /*width: 90%;*/
+}
+
+.well {
+    /*background: #eeeeee;*/
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px auto;
+    /*width: 90%;*/
+}
+
