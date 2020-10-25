@@ -1,4 +1,44 @@
 .container {
-  max-height: 20vh;
-  overflow: auto;
+    max-height: 20vh;
+    overflow: auto;
+}
+
+.chip {
+    display: inline-block;
+    padding: 0 15px 0 25px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 40px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    border: 1px solid #cdcdcd;
+    color: #707070;
+}
+
+.chip img {
+    float: left;
+    margin: 0 10px 0 -25px;
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
+}
+
+.chipWrapper input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+}
+
+.chipWrapper input:checked + .chip {
+    border: 1px solid #929292;
+    background: #929292;
+    font-size: 14px;
+    color: #ffffff;
+
+}
+
+.chipWrapper input:checked + .chip img {
+    margin: -1px 10px 0 -26px;
 }
