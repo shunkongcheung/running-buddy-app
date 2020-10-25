@@ -7,34 +7,54 @@
   margin-right: 15px;
 }
 
+.avatar {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.mediaLeft {
+  margin: 0 15px 0 0;
+}
+
+.emailH6 {
+  font-size: 12px;
+  color: #777777;
+}
+
+.distanceLabel {
+  color: #777777;
+}
+
+
 .acceptIcon {
   width: 40px;
   height: 40px;
   padding: 5px;
-  border: solid 2px rgba(22, 233, 29, 1);
+  border: solid 2px rgb(22, 135, 233);
   border-radius: 10%;
-  color: rgba(22, 233, 29, 1);
+  color: rgb(22, 135, 233);
   cursor: pointer;
   margin: auto 10px;
 }
 
 .acceptIcon:hover {
-  border: solid 2px rgba(115, 242, 119, 1);
-  color: rgba(22, 233, 29, 1);
+  border: solid 2px rgb(22, 135, 233);
+  color: rgb(22, 135, 233);
 }
 
 .declineIcon {
   width: 40px;
   height: 40px;
   padding: 5px;
-  border: solid 2px rgba(240, 51, 92, 1);
+  border: solid 2px #ef3648;
   border-radius: 10%;
-  color: rgba(240, 51, 92, 1);
+  color: #ef3648;
   cursor: pointer;
   margin: auto 10px;
 }
 
 .declineIcon:hover {
-  border: solid 2px rgba(244, 103, 134, 1);
-  color: rgba(244, 103, 134, 1);
+  border: solid 2px #ef3648;
+  color: #ef3648;
 }
