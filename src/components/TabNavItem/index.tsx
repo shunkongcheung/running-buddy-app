@@ -3,13 +3,12 @@ import { NavItem, NavLink } from "reactstrap";
 
 import classNames from "./TabNavItem.module.css";
 
-type TabName = "upcoming" | "requested" | "finished";
 
 interface NavTabItemProps {
   activeName: string;
   label: string;
-  tabName: TabName;
-  handleClick: (name: TabName) => any;
+  tabName: string;
+  handleClick: (name: string) => any;
 }
 
 const NavTabItem: React.FC<NavTabItemProps> = ({

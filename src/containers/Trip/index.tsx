@@ -1,15 +1,14 @@
-import React, {memo, useCallback} from "react";
+import React, { memo, useCallback } from "react";
 import firebase from "firebase/app";
-import {useRouter} from "next/router";
-import {Container, Nav, TabContent, TabPane} from "reactstrap";
+import { useRouter } from "next/router";
+import { Container, Nav, TabContent, TabPane } from "reactstrap";
 
 import EditTrip from "./EditTrip";
 import RequestList from "./RequestList";
-import TabNavItem from "./TabNavItem";
 import classNames from "./Trip.module.css";
 import TripList from "./TripList";
 
-import {LineButton} from "../../components";
+import { LineButton, TabNavItem } from "../../components";
 import useTripListState from "./useTripListState";
 
 interface TripProps {}
@@ -57,8 +56,9 @@ const Trip: React.FC<TripProps> = () => {
           <Container className={classNames.heading}>
             <h5>Manage my trips</h5>
             <LineButton
-                className={classNames.lineButton}
-                onClick={() => setIsOpen(true)}>
+              className={classNames.lineButton}
+              onClick={() => setIsOpen(true)}
+            >
               Create Trip
             </LineButton>
           </Container>
