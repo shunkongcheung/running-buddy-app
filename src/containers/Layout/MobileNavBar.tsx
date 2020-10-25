@@ -9,7 +9,7 @@ interface MobileNavBarProps {}
 
 const MobileNavBar: React.FC<MobileNavBarProps> = () => {
   const routes = [
-    { pathname: "/trip", displayName: "trip", icon: <BsFillAlarmFill /> },
+    { pathname: "/trip", displayName: "Trip", icon: <BsFillAlarmFill /> },
     { pathname: "/buddy", displayName: "Buddy", icon: <BsFillAlarmFill /> },
     { pathname: "/profile", displayName: "Profile", icon: <BsFillAlarmFill /> },
   ];
