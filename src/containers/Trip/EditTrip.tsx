@@ -165,8 +165,8 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               </Label>
               <Input
                   type="text"
-                  name="startingpoint"
-                  id="starting-point"
+                  name="name"
+                  id="name"
                   onChange={handleChange}
               />
             </FormGroup>
@@ -187,6 +187,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
                       name="startingpoint"
                       id="starting-point"
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       placeholder="CityPlace - Downtown"
                   />
                 </Media>
@@ -213,6 +214,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
                                 id="ending-point"
                                 onChange={(e) => handleStopChange(e, i)}
                                 value={stop}
+                                onBlur={handleBlur}
                                 placeholder={`Destination ${i + 1}`}
                             />
                           </Media>
@@ -250,6 +252,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
                       name="endingpoint"
                       id="ending-point"
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       placeholder="Trillium Park"
                   />
                 </Media>
