@@ -1,12 +1,13 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
+import Link from "next/link";
 import firebase from "firebase/app";
-import {ListGroup, ListGroupItem, Media} from "reactstrap";
+import { ListGroup, ListGroupItem, Media } from "reactstrap";
 
-import {Trip} from "../../types";
+import { Trip } from "../../types";
 
 import classNames from "./TripRecords.module.css";
 
-import {PlaceHolder} from "../../components";
+import { PlaceHolder } from "../../components";
 
 interface TripItem extends Trip {
   uid: string;
@@ -60,11 +61,13 @@ const TripRecords: React.FC = () => {
           <ListGroupItem key={`TripRecordItem-${trip.uid}`}>
             <Media>
               <Media className={classNames.mediaLeft} left>
-                <Media
-                  className={classNames.avatar}
-                  object
-                  src="/trip-old.png"
-                />
+                <Link href={`/trip/${trip.uid}`}>
+                  <Media
+                    className={classNames.avatar}
+                    object
+                    src="/trip-old.png"
+                  />
+                </Link>
               </Media>
               <Media body>
                 <h5>{trip.name}</h5>
@@ -73,8 +76,8 @@ const TripRecords: React.FC = () => {
                 </h6>
                 <h6 className={classNames.emailH6}>
                   {participantCount > 1
-                      ? `${participantCount} buddies joined you on this trip`
-                      : "You went on this trip as a solo hero"}
+                    ? `${participantCount} buddies joined you on this trip`
+                    : "You went on this trip as a solo hero"}
                 </h6>
               </Media>
             </Media>
