@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import { Trip } from "../../types";
 

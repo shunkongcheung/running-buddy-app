@@ -79,7 +79,8 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
 
   React.useEffect(() => {
     if (map && map.current) {
-      (map as any).current.fitBounds(bounds);
+      // comment out to get a better zoom size
+      // (map as any).current.fitBounds(bounds);
     }
   }, []);
 
@@ -88,11 +89,15 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
       <GoogleMap
         defaultZoom={15}
         ref={map}
-        defaultCenter={{ lat: centerPoint[0], lng: centerPoint[1] }}
+        defaultCenter={{
+          lat: centerPoint[0] || 43.65107,
+          lng: centerPoint[1] || -79.347015,
+        }}
       >
         {coordinates.map((coord, i) => (
           <Marker
             {...(i < coordinates.length - 1 && { icon: iconMarker })}
+            key={`Marker-${i}`}
             position={coord}
           />
         ))}
