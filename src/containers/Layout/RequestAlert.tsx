@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { useRouter } from "next/router";
-import { Alert, Fade } from "reactstrap";
+import { Container, Alert, Fade } from "reactstrap";
 
 import useLatestRequest from "./useLatestRequest";
 import classNames from "./RequestAlert.module.css";
@@ -17,15 +17,17 @@ const RequestAlert: React.FC = () => {
   if (!isExist) return <></>;
 
   return (
-    <Fade mountOnEnter>
-      <Alert
-        color="primary"
-        onClick={handleClick}
-        className={classNames.container}
-      >
-        You have an invition {name} by {createdByName}
-      </Alert>
-    </Fade>
+    <Container>
+      <Fade mountOnEnter>
+        <Alert
+          color="primary"
+          onClick={handleClick}
+          className={classNames.container}
+        >
+          You have an invition {name} by {createdByName}
+        </Alert>
+      </Fade>
+    </Container>
   );
 };
 
