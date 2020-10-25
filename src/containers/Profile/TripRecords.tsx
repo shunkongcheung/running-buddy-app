@@ -1,8 +1,10 @@
-import React, { memo } from "react";
+import React, {memo} from "react";
 import firebase from "firebase/app";
-import { ListGroup, ListGroupItem, Media } from "reactstrap";
+import {ListGroup, ListGroupItem, Media} from "reactstrap";
 
-import { Trip } from "../../types";
+import {Trip} from "../../types";
+
+import classNames from "./TripRecords.module.css";
 
 interface TripItem extends Trip {
   uid: string;
@@ -14,17 +16,17 @@ const getFinishedTrips = async () => {
   if (!userId) return [];
 
   const docRef = await firebase
-    .firestore()
-    .collection("trips")
-    .where("createdByUid", "==", userId)
-    .get();
+      .firestore()
+      .collection("trips")
+      .where("createdByUid", "==", userId)
+      .get();
   if (!docRef.size) return [];
 
   const trips: Array<TripItem> = [];
   docRef.forEach((item) => {
     const data = item.data();
     const createdAt = data.createdAt.toDate();
-    trips.push({ ...data, uid: item.id, createdAt } as TripItem);
+    trips.push({...data, uid: item.id, createdAt} as TripItem);
   });
 
   return trips;
@@ -42,24 +44,26 @@ const TripRecords: React.FC = () => {
   }, []);
 
   return (
-    <ListGroup>
-      {trips.map((trip) => (
-        <ListGroupItem key={`TripRecordItem-${trip.uid}`}>
-          <Media>
-            <Media body>
-              <Media header="true">
-                <h4>{trip.name}</h4>
+      <ListGroup>
+        {trips.map((trip) => (
+            <ListGroupItem key={`TripRecordItem-${trip.uid}`}>
+              <Media>
+                <Media className={classNames.mediaLeft} left>
+                  <Media className={classNames.avatar} object src="/trip-old.png"/>
+                </Media>
+                <Media body>
+                  <h5>{trip.name}</h5>
+                  <h6 className={classNames.emailH6}>
+                    You went on this trip for {trip.rounds.length} time(s)
+                  </h6>
+                  <h6 className={classNames.emailH6}>
+                    You were joined by {trip.participants.length} of your buddies
+                  </h6>
+                </Media>
               </Media>
-              <p>
-                You have ran for {trip.rounds.length} time(s).
-                <br />
-                There were {trip.participants.length} joining you.
-              </p>
-            </Media>
-          </Media>
-        </ListGroupItem>
-      ))}
-    </ListGroup>
+            </ListGroupItem>
+        ))}
+      </ListGroup>
   );
 };
 
