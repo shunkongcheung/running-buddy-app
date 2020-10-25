@@ -28,8 +28,13 @@
   border-left: 1px solid #ddd;
   border-right: 1px solid #ddd;
   cursor: pointer;
+  background: #ffffff;
 }
 
 .active {
-  background: #f2f2f2;
+  background: #f1f1f1;
+}
+
+.fontColor {
+  color: #007bff;
 }
