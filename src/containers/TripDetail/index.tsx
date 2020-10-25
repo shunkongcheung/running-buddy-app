@@ -53,34 +53,30 @@ const TripDetail: React.FC<TripDetailProps> = () => {
             <h2>{name}</h2>
           </CardTitle>
           <CardText>
-            <p>
-              {!!participants.length && (
-                <>
-                  <br />
-                  {participants.map((user) => user.displayName).join(",")} will
-                  be joining you.
-                </>
-              )}
-            </p>
-            <p>
-              Location: {startingPoint} {"=>"} {endingPoint}
-            </p>
+            {!!participants.length && (
+              <>
+                <br />
+                {participants.map((user) => user.displayName).join(",")} will be
+                joining you.
+              </>
+            )}
+            <br />
+            Location: {startingPoint} {"=>"} {endingPoint}
+            <br />
             {/*stopPoints && Boolean(stopPoints.length) && (
               <p>Stops: {stopPoints.join(",")}</p>
 							) */}
-
             <small>Created at {createdAt.toLocaleString()}</small>
-
-            <Map
-              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.googleAPIKey}`}
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={
-                <div style={{ height: `400px`, width: "100%" }} />
-              }
-              mapElement={<div style={{ height: `100%` }} />}
-              coordinates={coordinates}
-            />
           </CardText>
+          <Map
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.googleAPIKey}`}
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={
+              <div style={{ height: `400px`, width: "100%" }} />
+            }
+            mapElement={<div style={{ height: `100%` }} />}
+            coordinates={coordinates}
+          />
           {createdByUid === userId && (
             <div className={classNames.btnContainer}>
               <LineButton
