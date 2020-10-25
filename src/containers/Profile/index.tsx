@@ -21,9 +21,6 @@ const Profile: React.FC = () => {
   return (
       <Container>
         <Row>
-          <Col md={4} className={classNames.col}>
-            <UserInfoCard/>
-          </Col>
           <Col md={8} className={classNames.col}>
             {loading ? (
                 <div className={classNames.spnnerContainer}>
@@ -72,6 +69,9 @@ const Profile: React.FC = () => {
                   </TabContent>
                 </>
             )}
+          </Col>
+          <Col md={4} className={classNames.col}>
+            <UserInfoCard/>
           </Col>
         </Row>
       </Container>
