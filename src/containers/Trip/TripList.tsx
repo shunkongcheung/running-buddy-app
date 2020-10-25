@@ -56,7 +56,7 @@ const TripList: React.FC<TripListProps> = ({loading, trips}) => {
                             on this trip.
                           </h6>
                           <h6 className={classNames.emailH6}>
-                            You have gone on this trip for <b className={classNames.numberB}>{rounds.length}</b> times
+                            You went on this trip for <b className={classNames.numberB}>{rounds.length}</b> time(s)
                           </h6>
                           <h6 className={classNames.emailH6}>
                             Created at {createdAt.toLocaleString()}
