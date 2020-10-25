@@ -127,7 +127,7 @@ const ParticipantsField: React.FC<ParticipantsFieldProps> = ({
                       height="96"
                     />
                     {displayName}
-                    {distance && <b> - {Math.round(distance)} km</b>}
+                    {Boolean(distance) && <b> - {Math.round(distance)} km</b>}
                     {placeName && <span>({placeName})</span>}
                   </div>
                 </Label>
