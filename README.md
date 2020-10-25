@@ -27,7 +27,7 @@ This site is built with Next.js, bootstrap, firebase and google map.
 
 Visit [Landing Page](https://running-buddy-app.vercel.app/) to learn about the application. Corresponding codebase can be found in [containers/Landing](./src/containers/Landing).
 
-To login, check out [Login Page](https://running-buddy-app.vercel.app/login). Corresponding codebase can be found in [containers/Landing](./src/containers/Login).
+To login, check out [Login Page](https://running-buddy-app.vercel.app/login). Corresponding codebase can be found in [containers/Login](./src/containers/Login).
 
 To Add a buddy that are also registered in the site, checkout [Buddy Page](https://running-buddy-app.vercel.app/buddy). Corresponding codebase can be found in [containers/Buddy](./src/containers/Buddy).
 
