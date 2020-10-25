@@ -21,6 +21,8 @@ export interface Round {
   calories: number;
   maxKmPerHour: number;
   minKmPerHour: number;
+
+  createdByUid: string;
 }
 
 export interface Trip {
