@@ -72,7 +72,6 @@ const CalaroriesChart: React.FC<CalaroriesChartProps> = ({ rounds }) => {
   };
   return (
     <Container>
-      <h3>Summary </h3>
       <Bar
         data={data}
         options={{
