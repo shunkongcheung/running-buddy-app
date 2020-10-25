@@ -41,7 +41,11 @@ const TripList: React.FC<TripListProps> = ({ loading, trips }) => {
                       <Media
                         className={classNames.avatar}
                         object
-                        src="/trip.png"
+                        src={
+                          createdByUid === userId
+                            ? "/trip.png"
+                            : "/trip-request.png"
+                        }
                       />
                     </Link>
                   </Media>
