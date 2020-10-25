@@ -42,10 +42,11 @@ const RequestList: React.FC<RequestListProps> = ({handleRequestUpdate}) => {
                       <Media body>
                         <h5>{name}</h5>
                         <h6 className={classNames.emailH6}>
-                          {participants.length} confirmed the invitation.
+                          <b className={classNames.numberB}>{displayName}</b> invited to this trip
                         </h6>
                         <h6 className={classNames.emailH6}>
-                          Trip initiated by {displayName}.
+                          <b className={classNames.numberB}>{participants.length}</b> buddies
+                          of {displayName.split(' ')[0]} have confirmed to join
                         </h6>
                         <h6 className={classNames.emailH6}>
                           Created at {createdAt.toLocaleString()}
