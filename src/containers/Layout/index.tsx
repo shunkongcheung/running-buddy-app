@@ -1,6 +1,6 @@
 import React, { memo, ReactNode } from "react";
 import { useRouter } from "next/router";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import RequestAlert from "./RequestAlert";
 import NavBar from "./NavBar";

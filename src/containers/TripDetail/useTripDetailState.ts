@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import firebase from "firebase";
+import firebase from "firebase/app";
 
 import { Trip, Round, RegisteredUser } from "../../types";
 

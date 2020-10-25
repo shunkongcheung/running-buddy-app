@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { useRouter } from "next/router";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import { Button, Card, CardBody, FormGroup, Input } from "reactstrap";
 
 import classNames from "./UserInfoCard.module.css";

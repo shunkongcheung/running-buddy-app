@@ -7,7 +7,7 @@ import {
   Container,
   ListGroup,
 } from "reactstrap";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import Map from "./Map";
 
 import { LineButton } from "../../components";
