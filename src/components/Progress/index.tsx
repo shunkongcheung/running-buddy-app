@@ -28,7 +28,7 @@ const Progress: React.FC<ProgressProps> = ({ loading }) => {
   if (!loading) return <></>;
   return (
     <StrapProgress
-      stripped
+      stripped="true"
       bar
       animated
       color="info"
