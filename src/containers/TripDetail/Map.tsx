@@ -80,9 +80,9 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
   React.useEffect(() => {
     if (map && map.current) {
       // comment out to get a better zoom size
-      // (map as any).current.fitBounds(bounds);
+      (map as any).current.fitBounds(bounds);
     }
-  }, []);
+  });
 
   return (
     <>
