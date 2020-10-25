@@ -5,7 +5,7 @@ import {
   withScriptjs,
   GoogleMap,
   Marker,
-  Polyline,
+  Polyline
 } from "react-google-maps";
 
 interface Coords {
@@ -26,7 +26,7 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
         trackingLocation.lat +
           (deliveryLocation.lat - trackingLocation.lat) * 0.5,
         trackingLocation.lng +
-          (deliveryLocation.lng - trackingLocation.lng) * 0.5,
+          (deliveryLocation.lng - trackingLocation.lng) * 0.5
       ];
     } else {
       return trackingLocation;
@@ -44,36 +44,36 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
   const getMinAndMaxBounds = () => {
     const minLat = Math.min.apply(
       null,
-      coordinates.map((coords) => coords.lat)
+      coordinates.map(coords => coords.lat)
     );
     const minLang = Math.min.apply(
       null,
-      coordinates.map((item) => item.lng)
+      coordinates.map(item => item.lng)
     );
     const maxLat = Math.max.apply(
       null,
-      coordinates.map((coords) => coords.lat)
+      coordinates.map(coords => coords.lat)
     );
     const maxLang = Math.max.apply(
       null,
-      coordinates.map((item) => item.lng)
+      coordinates.map(item => item.lng)
     );
     return {
       minCords: {
         lat: minLat,
-        lng: minLang,
+        lng: minLang
       },
       maxCords: {
         lat: maxLat,
-        lng: maxLang,
-      },
+        lng: maxLang
+      }
     };
   };
   const { minCords, maxCords } = getMinAndMaxBounds();
   const centerPoint = midPoint(minCords, maxCords);
 
   const bounds = new (window as any).google.maps.LatLngBounds();
-  coordinates.map((cord) => {
+  coordinates.map(cord => {
     bounds.extend(new (window as any).google.maps.LatLng(cord.lat, cord.lng));
   });
 
@@ -91,15 +91,11 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
         ref={map}
         defaultCenter={{
           lat: centerPoint[0] || 43.65107,
-          lng: centerPoint[1] || -79.347015,
+          lng: centerPoint[1] || -79.347015
         }}
       >
         {coordinates.map((coord, i) => (
-          <Marker
-            {...(i < coordinates.length - 1 && { icon: iconMarker })}
-            key={`Marker-${i}`}
-            position={coord}
-          />
+          <Marker icon={iconMarker} key={`Marker-${i}`} position={coord} />
         ))}
 
         <Polyline path={coordinates} options={{ strokeColor: "#FF0000 " }} />

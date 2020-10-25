@@ -72,9 +72,21 @@ function useTripDetailState() {
   const updateTripDetail = useCallback(async () => {
     setTripDetailState((o) => ({ ...o, loading: true }));
     const trip = await getTrip(tripUid);
+    const userId = firebase.auth().currentUser.uid;
+
+    const participantIds =
+      trip.createdByUid === userId
+        ? // if it is created by me, just use participants
+          trip.participants
+        : // if it is created by a buddy, filter myself and add the creator
+          [
+            ...trip.participants.filter((uid) => uid !== userId),
+            trip.createdByUid,
+          ];
+
     const [rounds, participants] = await Promise.all([
       getRounds(trip.rounds),
-      getParticipants(trip.participants),
+      getParticipants(participantIds),
     ]);
 
     setTripDetailState({ ...trip, rounds, participants, loading: false });
