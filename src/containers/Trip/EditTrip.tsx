@@ -251,6 +251,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
             <hr/>
 
             <ParticipantsField coords={coords} handleChange={handleChange}/>
+
           </Form>
         </ModalBody>
         <ModalFooter>
