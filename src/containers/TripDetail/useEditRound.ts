@@ -54,7 +54,9 @@ function useEditRound() {
 
   const [started, setStarted] = useState(false);
 
-  const roundData = useRef<Round>({ ...initialData, tripUid });
+  const createdByUid = firebase.auth().currentUser.uid;
+
+  const roundData = useRef<Round>({ ...initialData, tripUid, createdByUid });
   const prevCoord = useRef<Coord | null>();
   const unsubscribe = useRef<number>();
 
@@ -101,9 +103,9 @@ function useEditRound() {
 
     prevCoord.current = null;
     clearInterval(unsubscribe.current);
-    roundData.current = { ...initialData, tripUid };
+    roundData.current = { ...initialData, tripUid, createdByUid };
     setStarted(false);
-  }, [tripUid]);
+  }, [tripUid, createdByUid]);
 
   useEffect(() => {
     if (initialized.current) return;

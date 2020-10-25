@@ -27,8 +27,9 @@ const RoundItem: React.FC<Round> = ({
       <Media>
         <Media body>
           <p>
-            You have ran for {durationStr}. Burnt {calories} calories. <br />
-            Your average speed is {averageKmPerHour.toFixed()} km/hour.
+            You have ran for {durationStr}. Burnt {calories.toFixed(2)}{" "}
+            calories. <br />
+            Your average speed is {averageKmPerHour.toFixed(2)} km/hour.
           </p>
           <small>
             From {startAt.toLocaleString()} to {endAt.toLocaleString()}.<br />

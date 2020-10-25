@@ -16,6 +16,7 @@ import RoundItem from "./RoundItem";
 import classNames from "./TripDetail.module.css";
 import useTripDetailState from "./useTripDetailState";
 import useEditRound from "./useEditRound";
+import useRunningTime from "./useRunningTime";
 
 interface TripDetailProps {}
 
@@ -41,6 +42,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
   }, [finishRound, updateTripDetail]);
 
   const userId = firebase.auth().currentUser?.uid;
+  const runningTime = useRunningTime(started);
 
   return (
     <Container>
@@ -83,7 +85,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
                 className={classNames.statusBtn}
                 onClick={started ? handleFinish : startRound}
               >
-                {started ? "Finish" : "Start"}
+                {started ? `${runningTime} Finish` : "Start"}
               </LineButton>
             </div>
           )}
