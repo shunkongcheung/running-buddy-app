@@ -87,7 +87,7 @@ const TripDetail: React.FC<TripDetailProps> = () => {
               </LineButton>
             </div>
           )}
-          {rounds.length && (
+          {!!rounds.length && (
             <ListGroup className={classNames.roundList}>
               {rounds.map((round, idx) => (
                 <RoundItem key={`RoundItem-${idx}`} {...round} />
