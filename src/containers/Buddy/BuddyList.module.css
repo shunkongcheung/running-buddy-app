@@ -28,3 +28,8 @@
 .loggedInLabel {
     color: #777777;
 }
+
+.lineButton {
+    float: right;
+    padding: 4px 8px;
+}

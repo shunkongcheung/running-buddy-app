@@ -63,3 +63,8 @@
   color: #3977c4;
   font-size: 14px;
 }
+
+.lineButton {
+  /*float: right;*/
+  padding: 4px 8px;
+}

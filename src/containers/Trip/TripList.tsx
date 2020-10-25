@@ -2,11 +2,11 @@ import React, {memo} from "react";
 import firebase from "firebase/app";
 import Link from "next/link";
 
-import {ListGroup, ListGroupItem, Media} from "reactstrap";
+import {Button, ListGroup, ListGroupItem, Media} from "reactstrap";
 
 import classNames from "./TripList.module.css";
 
-import {LineButton, PlaceHolder, Progress} from "../../components";
+import {PlaceHolder, Progress} from "../../components";
 import {Trip} from "../../types";
 
 interface TripItem extends Trip {
@@ -65,7 +65,8 @@ const TripList: React.FC<TripListProps> = ({loading, trips}) => {
                         {userId === createdByUid && (
                             <Media right>
                               <Link href={`/trip/${uid}?start=true`}>
-                                <LineButton>Start Now!</LineButton>
+                                <Button outline color="primary"
+                                        className={classNames.lineButton}>Start Now</Button>
                               </Link>
                             </Media>
                         )}

@@ -13,7 +13,7 @@ const Landing: React.FC = () => {
       <>
         <div className={classNames.headingContainer}>
           <Fade mountOnEnter>
-            <div className={classNames.heading}>RUNNING FOR YOUR COMMUNITY</div>
+            <div className={classNames.heading}>YOU WILL NEVER RUN ALONG AGAIN</div>
           </Fade>
         </div>
         <Row>
