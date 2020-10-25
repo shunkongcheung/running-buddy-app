@@ -26,7 +26,7 @@ const RequestList: React.FC<RequestListProps> = ({ handleRequestUpdate }) => {
         {inviteRequests.map(
           ({
             uid,
-            trip: { name, participants, createdAt, startAt, uid: tripUid },
+            trip: { name, participants, createdAt, uid: tripUid },
             createdBy: { displayName },
           }) => (
             <ListGroupItem key={`TripListItem-${uid}`}>
@@ -37,8 +37,6 @@ const RequestList: React.FC<RequestListProps> = ({ handleRequestUpdate }) => {
                 <Media body>
                   <h3>{name}</h3>
                   <p>
-                    Your trip is scheduled at {startAt.toLocaleString()}
-                    <br />
                     {participants.length} confirmed the invitation.
                     <br />
                     Trip initiated by {displayName}.

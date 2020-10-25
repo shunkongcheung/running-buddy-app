@@ -78,12 +78,8 @@ const getTrips = async (tripIds: Array<string>): Promise<Array<TripItem>> => {
   docRefs.map((doc) => {
     const data = doc.data();
     const uid = doc.id;
-    trips.push({
-      ...data,
-      uid,
-      createdAt: data.createdAt.toDate(),
-      startAt: data.startAt.toDate(),
-    } as TripItem);
+    const createdAt = data.createdAt.toDate();
+    trips.push({ ...data, uid, createdAt } as TripItem);
   });
 
   return trips;
