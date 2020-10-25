@@ -16,19 +16,15 @@ const getFinishedTrips = async () => {
   const docRef = await firebase
     .firestore()
     .collection("trips")
-    .where("status", "==", "finished")
+    .where("createdByUid", "==", userId)
     .get();
   if (!docRef.size) return [];
 
   const trips: Array<TripItem> = [];
   docRef.forEach((item) => {
     const data = item.data();
-    trips.push({
-      ...data,
-      uid: item.id,
-      startAt: data.startAt.toDate(),
-      createdAt: data.createdAt.toDate(),
-    } as TripItem);
+    const createdAt = data.createdAt.toDate();
+    trips.push({ ...data, uid: item.id, createdAt } as TripItem);
   });
 
   return trips;
@@ -55,7 +51,7 @@ const TripRecords: React.FC = () => {
                 <h4>{trip.name}</h4>
               </Media>
               <p>
-                Your trip started at {trip.startAt.toLocaleString()}
+                You have ran for {trip.rounds.length} time(s).
                 <br />
                 There were {trip.participants.length} joining you.
               </p>

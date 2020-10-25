@@ -1,16 +1,17 @@
 import React, { memo } from "react";
-import { Container, Col, Row } from "reactstrap";
+import { Container, Col, Row, Spinner } from "reactstrap";
 
 import CarloriesChart from "./CarloriesChart";
 import PerformanceChart from "./PerformanceChart";
 import TripRecords from "./TripRecords";
 import UserInfoCard from "./UserInfoCard";
+import useRounds from "./useRounds";
 
 import classNames from "./Profile.module.css";
 
-interface ProfileProps {}
-
-const Profile: React.FC<ProfileProps> = () => {
+const Profile: React.FC = () => {
+  const { loading, rounds } = useRounds();
+  console.log({ rounds });
   return (
     <Container>
       <Row>
@@ -18,7 +19,13 @@ const Profile: React.FC<ProfileProps> = () => {
           <UserInfoCard />
         </Col>
         <Col md={8} className={classNames.col}>
-          <CarloriesChart />
+          {loading ? (
+            <div className={classNames.spnnerContainer}>
+              <Spinner style={{ width: "3rem", height: "3rem" }} />
+            </div>
+          ) : (
+            <CarloriesChart rounds={rounds} />
+          )}
         </Col>
       </Row>
       <Row className={classNames.reverseRow}>
@@ -26,7 +33,13 @@ const Profile: React.FC<ProfileProps> = () => {
           <TripRecords />
         </Col>
         <Col md={6} className={classNames.col}>
-          <PerformanceChart />
+          {loading ? (
+            <div className={classNames.spnnerContainer}>
+              <Spinner style={{ width: "3rem", height: "3rem" }} />
+            </div>
+          ) : (
+            <PerformanceChart />
+          )}
         </Col>
       </Row>
     </Container>
