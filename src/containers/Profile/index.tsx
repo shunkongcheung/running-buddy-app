@@ -11,7 +11,6 @@ import classNames from "./Profile.module.css";
 
 const Profile: React.FC = () => {
   const { loading, rounds } = useRounds();
-  console.log({ rounds });
   return (
     <Container>
       <Row>
