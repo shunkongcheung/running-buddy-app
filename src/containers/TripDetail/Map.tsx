@@ -34,7 +34,7 @@ const Map: React.FC<MapProps> = ({ coordinates }) => {
   };
 
   let iconMarker = new (window as any).google.maps.MarkerImage(
-    "https://img.favpng.com/6/7/4/computer-icons-google-map-maker-clip-art-png-favpng-Wgm1Jhqup5qqDE6CdZAK9yJdY.jpg",
+    "/pin.png",
     null /* size is determined at runtime */,
     null /* origin is 0,0 */,
     null /* anchor is bottom center of the scaled image */,
