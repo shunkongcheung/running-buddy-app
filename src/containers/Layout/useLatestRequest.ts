@@ -85,6 +85,17 @@ function useLatestRequest() {
     updateLastestRequestState();
   }, [latestRequest]);
 
+  useEffect(() => {
+    if (latestRequestState.isExist) {
+      const timeout = setTimeout(() => {
+        setLatestRequestState((o) => ({ ...o, isExist: false }));
+      }, 5000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [latestRequestState.isExist]);
+
   return { ...latestRequestState, handleReset };
 }
 
