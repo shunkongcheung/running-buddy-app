@@ -8,7 +8,8 @@ import ParticipantsField from "./ParticipantsField";
 
 import classNames from "./EditTrip.module.css";
 
-import {BiMap, GrAddCircle, IoIosRemoveCircleOutline} from "react-icons/all";
+import {BiMap} from "react-icons/bi";
+import {IoIosRemoveCircleOutline, IoMdAddCircleOutline} from "react-icons/io";
 
 interface EditTripModalProps {
   handleClose: (refresh?: boolean) => any;
@@ -112,11 +113,11 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
   const handleAddClick = () => {
     console.log("handleAddClick");
     const stops = [...trip.stopPoints, ""];
-    setTrip({ ...trip, stopPoints: stops });
+    setTrip({...trip, stopPoints: stops});
   };
 
   const handleStopChange = (e, index) => {
-    const { value } = e.target;
+    const {value} = e.target;
     const stops = [...trip.stopPoints];
     stops[index] = value;
     setTrip({
@@ -154,13 +155,13 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
   return (
       <Modal isOpen={isOpen} toggle={() => handleClose()}>
         <ModalHeader toggle={() => handleClose()}>
-          You are ready to go... soon!
+          Plan my trip!
         </ModalHeader>
         <ModalBody>
           <Form onSubmit={handleSubmit}>
             <FormGroup>
               <Label for="name" className={classNames.formLabel}>
-                Trip Name
+                My trip name
               </Label>
               <Input
                   type="text"
@@ -171,8 +172,11 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
                   onChange={handleChange}
               />
             </FormGroup>
+
+            <hr/>
+
             <FormGroup>
-              <Label for="starting-point" className={classNames.formLabel}>Starting Location</Label>
+              <Label for="starting-point" className={classNames.formLabel}>I'll start my run here</Label>
               <Media>
                 <Media left>
                   <BiMap className={classNames.startEndPins}/>
@@ -190,45 +194,44 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
             </FormGroup>
 
             <div className={classNames.stopsWell}>
-              <FormGroup>
-                <GrAddCircle/>
-                <Button color="success" onClick={handleAddClick}>
-                  Add Stops
-                </Button>
-              </FormGroup>
+              <div>
 
-              {trip.stopPoints.map((stop, i) => (
-                  <>
-                    <FormGroup>
-                      {/*<Label for={`stopPoint${i + 1}`}>Stop Point {i}</Label>*/}
-                      <Label for={`stopPoint${i + 1}`} className={classNames.formLabel}>I'll be passing </Label>
-                      <Media>
-                        <Media body>
-                          <Input
-                              type="text"
-                              name={`stopPoint${i}`}
-                              id="ending-point"
-                              onChange={(e) => handleStopChange(e, i)}
-                              value={stop}
-                              placeholder={`Stop point ${i + 1}`}
-                          />
+                {trip.stopPoints.map((stop, i) => (
+                    <>
+                      <FormGroup>
+                        {/*<Label for={`stopPoint${i + 1}`}>Stop Point {i}</Label>*/}
+                        <Label for={`stopPoint${i + 1}`} className={classNames.formLabel}>I'll be passing </Label>
+                        <Media>
+                          <Media body>
+                            <Input
+                                type="text"
+                                name={`stopPoint${i}`}
+                                id="ending-point"
+                                onChange={(e) => handleStopChange(e, i)}
+                                value={stop}
+                                placeholder={`Destination ${i + 1}`}
+                            />
+                          </Media>
+                          <Media right>
+                            {trip.stopPoints.length > 0 && (
+                                <IoIosRemoveCircleOutline className={classNames.stopRemoveIcon}
+                                                          onClick={() => handleRemoveStop(i)}/>
+                            )}
+                          </Media>
                         </Media>
-                        <Media right>
-                          {trip.stopPoints.length > 0 && (
-                              <IoIosRemoveCircleOutline className={classNames.stopRemoveIcon}
-                                                        onClick={() => handleRemoveStop(i)}/>
-                          )}
-                        </Media>
-                      </Media>
-                    </FormGroup>
-                  </>
-              ))}
+                      </FormGroup>
+                    </>
+                ))}
+              </div>
+
+              <FormGroup onClick={handleAddClick}>
+                <IoMdAddCircleOutline className={classNames.stopAddIcon}/>
+                <span className={classNames.stopAddSpan}>Add destinations</span>
+              </FormGroup>
             </div>
 
             <FormGroup>
-              <Label for="starting-point" className={classNames.formLabel}>Ending Location</Label>
-
-
+              <Label for="starting-point" className={classNames.formLabel}>I'll finish my run here</Label>
               <Media>
                 <Media left>
                   <BiMap className={classNames.startEndPins}/>
@@ -245,6 +248,7 @@ const EditTripModal: React.FC<EditTripModalProps> = ({
               </Media>
             </FormGroup>
 
+            <hr/>
 
             <ParticipantsField coords={coords} handleChange={handleChange}/>
           </Form>
