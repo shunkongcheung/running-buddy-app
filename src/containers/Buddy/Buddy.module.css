@@ -15,18 +15,7 @@
 
 .lineButton {
     float: right;
-}
-
-.lineButton::before {
-    background: #ffffff;
-    color: #1860bf;
-    border: solid #1860bf;
-}
-
-.lineButton::after {
-    background: #ffffff;
-    color: #1860bf;
-    border: solid #1860bf;
+    padding: 4px 8px;
 }
 
 .well {

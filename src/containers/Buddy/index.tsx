@@ -1,10 +1,8 @@
 import React, {memo} from "react";
-import {Container} from "reactstrap";
+import {Button, Container} from "reactstrap";
 
 import classNames from "./Buddy.module.css";
 import AddBuddyModal from "./AddBuddyModal";
-
-import {LineButton} from "../../components";
 
 import BuddyList from "./BuddyList";
 import useBuddyListState from "./useBuddyListState";
@@ -30,11 +28,9 @@ const Buddy: React.FC<BuddyProps> = () => {
 
           <Container className={classNames.heading}>
             <h5>My Buddies</h5>
-            <LineButton
-                className={classNames.lineButton}
-                onClick={() => setIsOpenAddBuddy(true)}>
-              Add a Buddy
-            </LineButton>
+            <Button outline color="primary"
+                    onClick={() => setIsOpenAddBuddy(true)}
+                    className={classNames.lineButton}>Add a Buddy</Button>
           </Container>
         </div>
 

@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 import firebase from "firebase/app";
 
-import { Trip } from "../../types";
+import {Trip} from "../../types";
 
 interface TripItem extends Trip {
   uid: string;
@@ -70,9 +70,9 @@ function useTripListState() {
     const trips = [...selfTrips, ...joinedTrips].sort((a, b) => {
       const aTime = a.createdAt.getTime();
       const bTime = b.createdAt.getTime();
-      if (aTime > bTime) return 1;
+      if (aTime > bTime) return -1;
       if (aTime === bTime) return 0;
-      if (aTime < bTime) return -1;
+      if (aTime < bTime) return 1;
     });
 
     setState({ loading: false, trips });

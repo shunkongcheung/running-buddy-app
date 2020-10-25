@@ -1,16 +1,7 @@
-import React, { memo, useCallback } from "react";
-import {
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
-  Container,
-  ListGroup,
-} from "reactstrap";
+import React, {memo, useCallback} from "react";
+import {Button, Card, CardBody, CardText, CardTitle, Container, ListGroup,} from "reactstrap";
 import firebase from "firebase/app";
 import Map from "./Map";
-
-import { LineButton } from "../../components";
 
 import RoundItem from "./RoundItem";
 import classNames from "./TripDetail.module.css";
@@ -18,7 +9,8 @@ import useTripDetailState from "./useTripDetailState";
 import useEditRound from "./useEditRound";
 import useRunningTime from "./useRunningTime";
 
-interface TripDetailProps {}
+interface TripDetailProps {
+}
 
 const TripDetail: React.FC<TripDetailProps> = () => {
   const tripDetail = useTripDetailState();
@@ -78,14 +70,14 @@ const TripDetail: React.FC<TripDetailProps> = () => {
             coordinates={coordinates}
           />
           {createdByUid === userId && (
-            <div className={classNames.btnContainer}>
-              <LineButton
-                className={classNames.statusBtn}
-                onClick={started ? handleFinish : startRound}
-              >
-                {started ? `${runningTime} Finish` : "Start"}
-              </LineButton>
-            </div>
+              <div className={classNames.btnContainer}>
+
+                <Button outline color="primary"
+                        onClick={started ? handleFinish : startRound}
+                        className={classNames.lineButton}>
+                  {started ? `${runningTime} Finish` : "Start"}
+                </Button>
+              </div>
           )}
           {!!rounds.length && (
             <ListGroup className={classNames.roundList}>
