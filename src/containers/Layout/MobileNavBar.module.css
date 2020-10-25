@@ -9,6 +9,10 @@
   display: flex;
 }
 
+.padder {
+  height: 60px;
+}
+
 @media (min-width: 376px) {
   .container {
     display: none;

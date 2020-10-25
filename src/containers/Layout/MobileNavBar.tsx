@@ -15,25 +15,33 @@ const MobileNavBar: React.FC<MobileNavBarProps> = () => {
   ];
   const { pathname } = useRouter();
 
+  const notShowing = pathname === "/login" || pathname === "/";
+  if (notShowing) return <></>;
+
   return (
-    <div className={classNames.container}>
-      {routes.map((route, idx) => {
-        const active = pathname.includes(route.pathname);
-        return (
-          <Link href={route.pathname}>
-            <div
-              className={`${classNames.routeContainer} ${
-                active ? classNames.active : ""
-              }`}
-              key={`MobileRoute-${route.pathname}-${idx}`}
-            >
-              {route.icon}
-              <span className={classNames.routeName}>{route.displayName}</span>
-            </div>
-          </Link>
-        );
-      })}
-    </div>
+    <>
+      <div className={classNames.padder} />
+      <div className={classNames.container}>
+        {routes.map((route, idx) => {
+          const active = pathname.includes(route.pathname);
+          return (
+            <Link href={route.pathname}>
+              <div
+                className={`${classNames.routeContainer} ${
+                  active ? classNames.active : ""
+                }`}
+                key={`MobileRoute-${route.pathname}-${idx}`}
+              >
+                {route.icon}
+                <span className={classNames.routeName}>
+                  {route.displayName}
+                </span>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
